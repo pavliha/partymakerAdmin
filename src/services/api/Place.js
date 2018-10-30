@@ -9,6 +9,11 @@ class Place {
     return formatPlace(response)
   }
 
+  async create(form) {
+    const response = await Http.post('/places', form)
+    return formatPlace(response)
+  }
+
   async all(params) {
     const response = await Http.get(`/places?${qs.stringify({ limit: 10000, ...params })}`)
     response.data = response.data.map(place => formatPlace(place))

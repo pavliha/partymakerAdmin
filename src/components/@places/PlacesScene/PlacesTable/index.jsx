@@ -1,7 +1,7 @@
 /* eslint-disable react/no-access-state-in-setstate */
 import React from 'react'
-import { array, func, object, string } from 'prop-types'
-import { Checkbox, Table, TableBody, TableCell, TableRow, withStyles, TablePagination } from '@material-ui/core'
+import { object } from 'prop-types'
+import { Checkbox, Table, TableBody, TableCell, TablePagination, TableRow, withStyles } from '@material-ui/core'
 import TableHead from './TableHead'
 import Toolbar from './Toolbar'
 import connector from './connector'
@@ -39,7 +39,8 @@ class PlacesTable extends React.Component {
   isSelected = place => {
     const { places: { selected } } = this.props
 
-    return selected.map(p => p.id).includes(place.id)
+    return selected.map(p => p.id)
+      .includes(place.id)
   }
 
   handleChangePage = (event, page) => {
@@ -54,7 +55,7 @@ class PlacesTable extends React.Component {
 
   render() {
     const { classes, places: { filteredPlaces, selected, rowsPerPage, page } } = this.props
-    const paginatedPlaces = filteredPlaces.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+    const paginatedPlaces = filteredPlaces.slice(page * rowsPerPage, (page * rowsPerPage) + rowsPerPage)
     return (
       <div className={classes.root}>
         <Toolbar numSelected={selected.length} />
@@ -77,6 +78,9 @@ class PlacesTable extends React.Component {
                       </TableCell>
                       <TableCell padding="dense">
                         <Link to={`/places/${place.id}`}>{place.title}</Link>
+                      </TableCell>
+                      <TableCell>
+                        {place.working_day}
                       </TableCell>
                       <TableCell>
                         {place.working_hours}

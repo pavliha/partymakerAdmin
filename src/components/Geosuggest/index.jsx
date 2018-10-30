@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { TextField } from '@material-ui/core'
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { any, bool, func, object, oneOfType, shape, string } from 'prop-types'
 
 class Geosuggest extends Component {
   componentDidMount() {
@@ -41,7 +41,6 @@ class Geosuggest extends Component {
       error,
       placeholder,
       disabled,
-      formik,
     } = this.props
 
     const helper = helperText || ''
@@ -50,38 +49,38 @@ class Geosuggest extends Component {
       <TextField
         name={name}
         error={error}
-        fullWidth={fullWidth}
-        helperText={helper}
         label={label}
-        placeholder={placeholder}
-        InputLabelProps={{ shrink: formik && true }}
-        defaultValue={value.formatted_address || ''}
-        onBlur={this.handleBlur}
+        margin="dense"
         disabled={disabled}
+        helperText={helper}
+        fullWidth={fullWidth}
+        style={{ margin: 6 }}
+        onBlur={this.handleBlur}
+        placeholder={placeholder}
+        InputLabelProps={{ shrink: true }}
+        defaultValue={value.formatted_address || ''}
       />
     )
   }
 }
 
 Geosuggest.propTypes = {
-  fullWidth: PropTypes.bool,
-  error: PropTypes.bool,
-  disabled: PropTypes.bool,
-  formik: PropTypes.bool,
-  name: PropTypes.string,
-  placeholder: PropTypes.string,
-  label: PropTypes.string,
-  onChange: PropTypes.func,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  onBlur: PropTypes.func,
-  helperText: PropTypes.any,
-  options: PropTypes.shape({}),
+  fullWidth: bool,
+  error: bool,
+  disabled: bool,
+  name: string,
+  placeholder: string,
+  label: string,
+  onChange: func,
+  value: oneOfType([string, object]),
+  onBlur: func,
+  helperText: any,
+  options: shape({}),
 }
 
 Geosuggest.defaultProps = {
   fullWidth: false,
   error: false,
-  formik: false,
   disabled: false,
   name: 'geosuggest',
   label: '',

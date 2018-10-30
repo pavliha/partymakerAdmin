@@ -23,6 +23,7 @@ const initialState = {
   selected: [],
   rows: [
     { key: 'title', disablePadding: false, label: 'Title' },
+    { key: 'working_day', disablePadding: false, label: 'Working Day' },
     { key: 'working_hours', disablePadding: false, label: 'Working Hours' },
     { key: 'price', disablePadding: false, label: 'Price' },
     { key: 'pictures', disablePadding: false, label: 'Pictures' },
@@ -107,14 +108,14 @@ const placesReducer = (state = initialState, { type, payload, meta }) => {
     case SORT_PLACES: {
       const places = [...Object.values(state.places)]
 
-      const sorted = places.sort((prev, next) =>
-        prev[payload.by].localeCompare(next[payload.by]))
+      // const sorted = places.sort((prev, next) =>
+      //   prev[payload.by].localeCompare(next[payload.by]))
 
       return {
         ...state,
         order: payload.order,
         orderBy: payload.by,
-        filteredPlaces: payload.order === 'asc' ? sorted : sorted.reverse(),
+        filteredPlaces: payload.order === 'asc' ? places : places.reverse(),
       }
     }
 
