@@ -1,14 +1,14 @@
 /* eslint-disable no-fallthrough */
 import {
-  OPEN_PLACE,
+  CHANGE_PLACES_PAGE,
+  CHANGE_PLACES_ROWS_PER_PAGE,
+  FILTER_PLACES,
   LOAD_PLACES_FULFILLED,
   LOAD_PLACES_PENDING,
   LOAD_PLACES_REJECTED,
-  CHANGE_PLACES_PAGE,
-  CHANGE_PLACES_ROWS_PER_PAGE,
-  SELECT_PLACES,
+  OPEN_PLACE,
   SELECT_PLACE,
-  FILTER_PLACES,
+  SELECT_PLACES,
   SORT_PLACES,
 } from './action'
 import placeReducer from './place/reducer'
@@ -80,7 +80,8 @@ const placesReducer = (state = initialState, { type, payload, meta }) => {
 
     case SELECT_PLACE: {
       let selected = [...state.selected]
-      const isSelected = selected.map(p => p.id).includes(payload.id)
+      const isSelected = selected.map(p => p.id)
+        .includes(payload.id)
 
       if (!isSelected) {
         selected.push(payload)

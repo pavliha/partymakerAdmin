@@ -23,7 +23,7 @@ const styles = (theme) => ({
 class AddImage extends React.Component {
   handleUpload = (name, value) => {
     const { actions } = this.props
-    // actions.groupCard.addPictures({ pictures: value })
+    actions.place.update({ pictures: value })
   }
 
   render() {

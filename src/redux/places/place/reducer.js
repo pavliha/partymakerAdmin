@@ -1,12 +1,4 @@
-import {
-  CREATE_PLACE_FULFILLED,
-  CREATE_PLACE_PENDING,
-  CREATE_PLACE_REJECTED,
-
-  LOAD_PLACE_FULFILLED,
-  LOAD_PLACE_PENDING,
-  LOAD_PLACE_REJECTED,
-} from './action'
+import { LOAD_PLACE_FULFILLED, LOAD_PLACE_PENDING, LOAD_PLACE_REJECTED } from './action'
 
 const initPlace = (place = {}) => ({
   loading: false,
@@ -28,7 +20,6 @@ const placeReducer = (state = initialState, { type, payload }) => {
   switch (type) {
 
     case LOAD_PLACE_PENDING:
-    case CREATE_PLACE_PENDING:
       return {
         ...state,
         loading: true,
@@ -36,7 +27,6 @@ const placeReducer = (state = initialState, { type, payload }) => {
 
 
     case LOAD_PLACE_REJECTED:
-    case CREATE_PLACE_REJECTED:
       return {
         ...state,
         loading: false,
@@ -44,7 +34,6 @@ const placeReducer = (state = initialState, { type, payload }) => {
       }
 
     case LOAD_PLACE_FULFILLED:
-    case CREATE_PLACE_FULFILLED:
       return {
         ...state,
         ...initPlace(payload),
