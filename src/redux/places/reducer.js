@@ -25,7 +25,6 @@ const initialState = {
     { key: 'title', disablePadding: false, label: 'Title' },
     { key: 'working_day', disablePadding: false, label: 'Working Day' },
     { key: 'working_hours', disablePadding: false, label: 'Working Hours' },
-    { key: 'price', disablePadding: false, label: 'Price' },
     { key: 'pictures', disablePadding: false, label: 'Pictures' },
     { key: 'description', disablePadding: false, label: 'description' },
   ],

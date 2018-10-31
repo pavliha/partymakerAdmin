@@ -85,9 +85,6 @@ class PlacesTable extends React.Component {
                       <TableCell>
                         {place.working_hours}
                       </TableCell>
-                      <TableCell>
-                        {place.price}
-                      </TableCell>
                       <TableCell>{place.pictures.length} шт</TableCell>
                       <TableCell>{truncate(place.description, { length: 30 })}</TableCell>
                     </TableRow>

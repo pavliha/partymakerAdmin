@@ -3,7 +3,7 @@ import { func, object, shape, string } from 'prop-types'
 import { Button, Grid, withStyles } from '@material-ui/core'
 
 import Geosuggest from 'components/Geosuggest'
-import FormikText from '../formik/FormikText'
+import FormikText from './formik/FormikText'
 import WorkingHours from './WorkingHours'
 import AddPicture from './AddPicture'
 

@@ -23,7 +23,7 @@ const formik = withFormik({
     description: '',
   }),
 
-  handleSubmit: (values, { props: { actions, form }, setErrors, setSubmitting }) => {
+  handleSubmit: (values, { props: { actions, form }, resetForm, setErrors, setSubmitting }) => {
     const create = {
       title: values.title,
       address: {
@@ -41,6 +41,7 @@ const formik = withFormik({
     actions.place.create(create)
       .then(() => {
         setSubmitting(false)
+        resetForm()
         actions.places.load()
         // actions.place.update(create)
       })
