@@ -17,7 +17,7 @@ const formik = withFormik({
 
   mapPropsToValues: () => ({
     title: '',
-    address: '',
+    address: {},
     working_day: '',
     working_hours: '',
     description: '',

@@ -44,10 +44,10 @@ class PictureUpload extends React.Component {
   }
 
   upload = async (image) => {
-    const data = new FormData()
-    data.append('file', image, image.name)
+    const formData = new FormData()
+    formData.append('image', image)
 
-    const response = await Http.post(this.props.url, data, {
+    const response = await Http.post(this.props.url, formData, {
       onUploadProgress: (progressEvent) => {
         const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total)
         this.setState({
