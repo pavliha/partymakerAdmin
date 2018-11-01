@@ -1,12 +1,22 @@
 /* eslint-disable react/no-access-state-in-setstate */
 import React from 'react'
 import { object } from 'prop-types'
-import { Checkbox, Table, TableBody, TableCell, TablePagination, TableRow, withStyles } from '@material-ui/core'
+import {
+  Checkbox,
+  IconButton,
+  Table,
+  TableBody,
+  TableCell,
+  TablePagination,
+  TableRow,
+  withStyles,
+} from '@material-ui/core'
 import TableHead from './TableHead'
 import Toolbar from './Toolbar'
 import connector from './connector'
 import truncate from 'lodash/truncate'
 import { Link } from 'react-router-dom'
+import CreateIcon from 'mdi-react/CreateIcon'
 
 const styles = theme => ({
   root: {
@@ -53,6 +63,10 @@ class PlacesTable extends React.Component {
     actions.places.changeRowsPerPage(e.target.value)
   }
 
+  handleEditPlace = (placeId) => {
+    console.log(placeId)
+  }
+
   render() {
     const { classes, places: { filteredPlaces, selected, rowsPerPage, page } } = this.props
     const paginatedPlaces = filteredPlaces.slice(page * rowsPerPage, (page * rowsPerPage) + rowsPerPage)
@@ -87,6 +101,9 @@ class PlacesTable extends React.Component {
                       </TableCell>
                       <TableCell>{place.pictures.length} шт</TableCell>
                       <TableCell>{truncate(place.description, { length: 30 })}</TableCell>
+                      <TableCell>
+                        <IconButton onClick={() => this.handleEditPlace(place.id)}><CreateIcon /> </IconButton>
+                      </TableCell>
                     </TableRow>
                   )
                 })}

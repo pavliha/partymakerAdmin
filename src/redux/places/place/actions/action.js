@@ -26,10 +26,11 @@ export const create = form => ({
 
 
 // noinspection JSUnusedGlobalSymbols
-export const deletePlaces = places => ({
-  type: DELETE_PLACES,
-  payload: Place.delete(places),
-})
-
+export const deletePlaces = places => async dispatch => {
+  await dispatch({
+    type: DELETE_PLACES,
+    payload: Place.delete(places),
+  })
+}
 
 export default { update, create, deletePlaces }

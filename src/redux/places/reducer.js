@@ -27,6 +27,7 @@ const initialState = {
     { key: 'working_hours', disablePadding: false, label: 'Working Hours' },
     { key: 'pictures', disablePadding: false, label: 'Pictures' },
     { key: 'description', disablePadding: false, label: 'description' },
+    { key: 'edit', disablePadding: false, label: 'Редактировать' },
   ],
   rowsPerPage: 10,
   page: 0,

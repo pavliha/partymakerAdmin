@@ -4,7 +4,7 @@ import { Button, Grid, withStyles } from '@material-ui/core'
 
 import Geosuggest from 'components/Geosuggest'
 import FormikText from './formik/FormikText'
-import WorkingHours from './WorkingHours'
+import Working from './Working'
 import AddPicture from './AddPicture'
 
 import { Field, Form } from 'formik'
@@ -48,7 +48,7 @@ const CreateForm = ({ classes, values, errors, touched, setFieldValue, setFieldT
       error={!!errors.address && touched.address}
     />
 
-    <WorkingHours />
+    <Working />
     <AddPicture />
 
     <Field
