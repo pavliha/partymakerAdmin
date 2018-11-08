@@ -14,7 +14,6 @@ a {
     color: inherit;
 }
 
-
 @media only screen and (max-width: 1280px) {
     html, body {
         font-size: 15pt;

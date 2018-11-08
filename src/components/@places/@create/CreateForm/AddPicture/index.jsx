@@ -27,7 +27,7 @@ class AddImage extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, current } = this.props
 
     return (
       <div className={classes.root}>
@@ -35,6 +35,7 @@ class AddImage extends React.Component {
         <div className={classes.image}>
           <PictureUpload
             name="pictures"
+            pictures={current ? current.pictures : []}
             onChange={this.handleUpload}
           />
         </div>
@@ -46,6 +47,11 @@ class AddImage extends React.Component {
 AddImage.propTypes = {
   classes: object.isRequired,
   actions: object.isRequired,
+  current: object,
+}
+
+AddImage.defaultProps = {
+  current: undefined,
 }
 
 export default withStyles(styles)(connector(AddImage))

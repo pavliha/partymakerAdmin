@@ -18,6 +18,8 @@ const styles = theme => ({
   },
 
   buttonGroup: {
+    display: 'flex',
+    justifyContent: 'space-between',
     marginTop: theme.spacing.size4,
     marginBottom: theme.spacing.size3,
     '@media only screen and (max-width: 320px)': {
@@ -27,59 +29,74 @@ const styles = theme => ({
   },
 })
 
-const CreateForm = ({ classes, values, errors, touched, setFieldValue, setFieldTouched }) =>
-  <Form>
-    <Field
-      name="title"
-      placeholder="Шевчик"
-      label="Название места"
-      component={FormikText}
-    />
+class CreateForm extends React.Component {
+  handleCancel = () => {
+    const { actions } = this.props
+    actions.places.cancel()
+  }
 
-    <Geosuggest
-      fullWidth
-      label="Адрес"
-      name="address"
-      value={values.address}
-      onChange={setFieldValue}
-      onBlur={setFieldTouched}
-      placeholder="Адрес места"
-      helperText={errors.address}
-      error={!!errors.address && touched.address}
-    />
+  render() {
+    const { classes, current, values, errors, touched, setFieldValue, setFieldTouched } = this.props
+    return (
+      <Form>
+        <Field
+          name="title"
+          placeholder="Шевчик"
+          label="Название места"
+          component={FormikText}
+        />
 
-    <Working />
-    <AddPicture />
+        <Geosuggest
+          fullWidth
+          label="Адрес"
+          name="address"
+          value={values.address}
+          onChange={setFieldValue}
+          onBlur={setFieldTouched}
+          placeholder="Адрес места"
+          helperText={errors.address}
+          error={!!errors.address && touched.address}
+        />
 
-    <Field
-      rows={2}
-      multiline
-      rowsMax={3}
-      label="Описание"
-      name="description"
-      component={FormikText}
-      placeholder="Описание места"
-    />
+        <Working />
+        <AddPicture />
 
-    <Grid
-      container
-      justify="center"
-      className={classes.buttonGroup}
-    >
-      <Button
-        fullWidth
-        size="large"
-        type="submit"
-        color="primary"
-        variant="contained"
-      >
-        Создать место
-      </Button>
-    </Grid>
-  </Form>
+        <Field
+          rows={2}
+          multiline
+          rowsMax={3}
+          label="Описание"
+          name="description"
+          component={FormikText}
+          placeholder="Описание места"
+        />
+
+        <Grid
+          container
+          justify="center"
+          className={classes.buttonGroup}
+        >
+          <Button
+            fullWidth={!current}
+            size="large"
+            type="submit"
+            color="primary"
+            variant="contained"
+          >
+            {current ? 'Сохранить' : 'Создать место'}
+          </Button>
+          {current && <Button onClick={this.handleCancel}>Отмена</Button>}
+        </Grid>
+      </Form>
+    )
+  }
+}
+
 
 CreateForm.propTypes = {
+  actions: object.isRequired,
   classes: object.isRequired,
+  current: object,
   values: shape({
     address: object,
   }).isRequired,
@@ -89,6 +106,10 @@ CreateForm.propTypes = {
     address: string,
   }).isRequired,
   touched: object.isRequired,
+}
+
+CreateForm.defaultProps = {
+  current: undefined,
 }
 
 export default withStyles(styles)(connector(formik(CreateForm)))

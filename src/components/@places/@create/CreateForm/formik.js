@@ -15,15 +15,15 @@ const formik = withFormik({
 
     }),
 
-  mapPropsToValues: () => ({
-    title: '',
-    address: {},
-    working_day: '',
-    working_hours: '',
-    description: '',
+  mapPropsToValues: ({ current }) => ({
+    title: current ? current.title : '',
+    address: current ? current.align : {},
+    working_day: current ? current.working_day : '',
+    working_hours: current ? current.working_hours : '',
+    description: current ? current.description : '',
   }),
 
-  handleSubmit: (values, { props: { actions, form }, resetForm, setErrors, setSubmitting }) => {
+  handleSubmit: (values, { props: { actions, form, current }, resetForm, setErrors, setSubmitting }) => {
     const create = {
       title: values.title,
       address: {
@@ -43,7 +43,7 @@ const formik = withFormik({
         setSubmitting(false)
         resetForm()
         actions.places.load()
-        // actions.place.update(create)
+        actions.place.update({ pictures: [] })
       })
       .catch(errors => {
         setSubmitting(false)

@@ -23,6 +23,7 @@ const styles = theme => ({
 class PictureUpload extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
       pictures: props.pictures,
       loadingPicture: '',

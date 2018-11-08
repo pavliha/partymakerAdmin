@@ -5,10 +5,11 @@ import DeleteIcon from 'mdi-react/DeleteIcon'
 import connector from './connector'
 
 class DeletePlaceSelected extends React.Component {
-  deletePlaces = () => {
+  deletePlaces = async () => {
     const { actions, selected } = this.props
-    actions.place.deletePlaces(selected)
+    await actions.place.deletePlaces(selected)
     actions.places.load()
+    actions.places.resetSelect()
   }
 
   render() {

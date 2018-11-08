@@ -64,7 +64,8 @@ class PlacesTable extends React.Component {
   }
 
   handleEditPlace = (placeId) => {
-    console.log(placeId)
+    const { actions } = this.props
+    actions.places.open(placeId)
   }
 
   render() {
