@@ -20,6 +20,7 @@ const formik = withFormik({
     address: current ? current.align : {},
     working_day: current ? current.working_day : '',
     working_hours: current ? current.working_hours : '',
+    videos: current ? current.videos : [],
     description: current ? current.description : '',
   }),
 
@@ -34,7 +35,8 @@ const formik = withFormik({
       },
       working_day: values.working_day,
       working_hours: values.working_hours,
-      pictures: form.pictures,
+      pictures: form.pictures || [],
+      videos: form.videos || [],
       description: values.description,
     }
 
@@ -43,7 +45,7 @@ const formik = withFormik({
         setSubmitting(false)
         resetForm()
         actions.places.load()
-        actions.place.update({ pictures: [] })
+        actions.place.update({ pictures: [], videos: [] })
       })
       .catch(errors => {
         setSubmitting(false)

@@ -33,6 +33,20 @@ class PictureUpload extends React.Component {
     this.handleClickInput = this.handleClickInput.bind(this)
   }
 
+  // getSnapshotBeforeUpdate(prevProps, prevState) {
+  //   this.setState({
+  //     pictures: this.props.pictures,
+  //   })
+  //
+  //   return null
+  // }
+
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      pictures: nextProps.pictures,
+    })
+  }
 
   add = (image) => {
     if (image.type.match(/image.*/)) {

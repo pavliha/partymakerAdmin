@@ -6,11 +6,14 @@ import Geosuggest from 'components/Geosuggest'
 import FormikText from './formik/FormikText'
 import Working from './Working'
 import AddPicture from './AddPicture'
+import Videos from './Videos'
+import AddVideo from './Videos/AddVideo'
 
 import { Field, Form } from 'formik'
 import formik from './formik'
 
 import connector from './connector'
+
 
 const styles = theme => ({
   checked: {
@@ -60,6 +63,8 @@ class CreateForm extends React.Component {
 
         <Working />
         <AddPicture />
+        <Videos videos={values.videos} />
+        <AddVideo videos={values.videos} />
 
         <Field
           rows={2}

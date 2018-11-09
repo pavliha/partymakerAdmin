@@ -4,7 +4,7 @@ import { object } from 'prop-types'
 import { Typography, withStyles } from '@material-ui/core'
 import PictureUpload from 'components/PictureUpload'
 
-import connector from './connector'
+import connector from '../connector'
 
 
 const styles = (theme) => ({
