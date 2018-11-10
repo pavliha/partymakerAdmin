@@ -12,15 +12,15 @@ const formik = withFormik({
       working_day: Yup.string(),
       working_hours: Yup.string(),
       description: Yup.string(),
-
     }),
 
-  mapPropsToValues: ({ current }) => ({
+  mapPropsToValues: ({ current, form }) => ({
     title: current ? current.title : '',
     address: current ? current.align : {},
     working_day: current ? current.working_day : '',
     working_hours: current ? current.working_hours : '',
-    videos: current ? current.videos : [],
+    pictures: (current || form) ? ((current && current.pictures) || (form && form.pictures)) : [],
+    videos: (current || form) ? ((current && current.videos) || (form && form.videos)) : [],
     description: current ? current.description : '',
   }),
 
@@ -40,17 +40,31 @@ const formik = withFormik({
       description: values.description,
     }
 
-    actions.place.create(create)
-      .then(() => {
-        setSubmitting(false)
-        resetForm()
-        actions.places.load()
-        actions.place.update({ pictures: [], videos: [] })
-      })
-      .catch(errors => {
-        setSubmitting(false)
-        setErrors(transformValidationApi(errors))
-      })
+    if (current) {
+      actions.place.updatePlace(current.id, create)
+        .then(() => {
+          setSubmitting(false)
+          resetForm()
+          actions.places.load()
+          actions.place.update({ pictures: [], videos: [] })
+        })
+        .catch(errors => {
+          setSubmitting(false)
+          setErrors(transformValidationApi(errors))
+        })
+    } else {
+      actions.place.create(create)
+        .then(() => {
+          setSubmitting(false)
+          resetForm()
+          actions.places.load()
+          actions.place.update({ pictures: [], videos: [] })
+        })
+        .catch(errors => {
+          setSubmitting(false)
+          setErrors(transformValidationApi(errors))
+        })
+    }
   },
   displayName: 'CreatePlace',
 })

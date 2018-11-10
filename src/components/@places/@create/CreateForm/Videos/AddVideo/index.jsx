@@ -15,14 +15,15 @@ class AddVideo extends React.Component {
   handleAddVideo = () => {
     const { actions, videos } = this.props
     const { video } = this.state
-    videos.push(video)
+
+
+    videos.push(video.split('=')[1].split('?')[0].split('&')[0])
 
     actions.place.update({ videos })
 
     this.setState({
       video: '',
     })
-    // TODO: this.setState not working
   }
 
   handleChange = event => {
@@ -33,16 +34,19 @@ class AddVideo extends React.Component {
 
   render() {
     const { classes } = this.props
+    const { video } = this.state
+
     return (
       <div className={classes.root}>
         <TextField
           fullWidth
+          value={video}
           label="Видео"
-          placeholder="https://www.youtube.com/"
           margin="dense"
           style={{ margin: 6 }}
-          InputLabelProps={{ shrink: true }}
           onChange={this.handleChange}
+          InputLabelProps={{ shrink: true }}
+          placeholder="https://www.youtube.com/"
         />
         <Button size="small" onClick={this.handleAddVideo}>Добавить</Button>
       </div>

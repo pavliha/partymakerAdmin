@@ -1,6 +1,6 @@
 import React from 'react'
 import { func, object, shape, string } from 'prop-types'
-import { Button, Grid, withStyles } from '@material-ui/core'
+import { Button, Grid, withStyles, } from '@material-ui/core'
 
 import Geosuggest from 'components/Geosuggest'
 import FormikText from './formik/FormikText'
@@ -36,6 +36,11 @@ class CreateForm extends React.Component {
   handleCancel = () => {
     const { actions } = this.props
     actions.places.cancel()
+
+    actions.place.update({
+      pictures: [],
+      videos: [],
+    })
   }
 
   render() {
@@ -62,7 +67,7 @@ class CreateForm extends React.Component {
         />
 
         <Working />
-        <AddPicture />
+        <AddPicture pictures={values.pictures} />
         <Videos videos={values.videos} />
         <AddVideo videos={values.videos} />
 

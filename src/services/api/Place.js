@@ -14,6 +14,11 @@ class Place {
     return formatPlace(response)
   }
 
+  async update(id, form) {
+    const response = await Http.put(`/places/${id}`, form)
+    return formatPlace(response)
+  }
+
   async delete(places) {
     await places.forEach(async place =>
       await Http.delete(`/places/${place.id}`))

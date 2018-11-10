@@ -43,9 +43,11 @@ class PictureUpload extends React.Component {
 
 
   componentWillReceiveProps(nextProps) {
-    this.setState({
-      pictures: nextProps.pictures,
-    })
+    if (nextProps.pictures !== this.props.pictures) {
+      this.setState({
+        pictures: nextProps.pictures,
+      })
+    }
   }
 
   add = (image) => {
