@@ -5,6 +5,7 @@ import authReducer from './auth/reducer'
 import layoutReducer from './layout/reducer'
 import headerReducer from './header/reducer'
 import placesReducer from './places/reducer'
+import actionsPlaceReducer from './places/place/actions/reducer'
 import modalReducer from './modal/reducer'
 
 const persistConfig = {
@@ -17,6 +18,7 @@ const reducers = combineReducers({
   authReducer,
   modalReducer,
   placesReducer,
+  actionsPlaceReducer,
   layoutReducer,
   headerReducer,
 })

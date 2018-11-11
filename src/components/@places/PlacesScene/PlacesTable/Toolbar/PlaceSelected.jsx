@@ -1,6 +1,7 @@
 import React from 'react'
 import { number, object } from 'prop-types'
 import { Typography, withStyles } from '@material-ui/core'
+import DeletePlaceSelected from './DeletePlaceSelected'
 
 const styles = {
   root: {
@@ -13,10 +14,11 @@ const styles = {
   },
 }
 
-const PeopleSelected = ({ classes, selected }) =>
+const PlaceSelected = ({ classes, selected }) =>
   <div className={classes.root}>
     {selected > 0 ? (
-      <div>
+      <div className={classes.root}>
+        <DeletePlaceSelected />
         <Typography
           className={classes.counterText}
           component="div"
@@ -30,9 +32,9 @@ const PeopleSelected = ({ classes, selected }) =>
     ) : null}
   </div>
 
-PeopleSelected.propTypes = {
+PlaceSelected.propTypes = {
   classes: object.isRequired,
   selected: number.isRequired,
 }
 
-export default withStyles(styles)(PeopleSelected)
+export default withStyles(styles)(PlaceSelected)

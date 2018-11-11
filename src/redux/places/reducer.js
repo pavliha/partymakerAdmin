@@ -1,14 +1,16 @@
 /* eslint-disable no-fallthrough */
 import {
-  OPEN_PLACE,
+  CANCEL_PLACE,
+  CHANGE_PLACES_PAGE,
+  CHANGE_PLACES_ROWS_PER_PAGE,
+  FILTER_PLACES,
   LOAD_PLACES_FULFILLED,
   LOAD_PLACES_PENDING,
   LOAD_PLACES_REJECTED,
-  CHANGE_PLACES_PAGE,
-  CHANGE_PLACES_ROWS_PER_PAGE,
-  SELECT_PLACES,
+  OPEN_PLACE,
+  RESET_SELECT,
   SELECT_PLACE,
-  FILTER_PLACES,
+  SELECT_PLACES,
   SORT_PLACES,
 } from './action'
 import placeReducer from './place/reducer'
@@ -23,10 +25,11 @@ const initialState = {
   selected: [],
   rows: [
     { key: 'title', disablePadding: false, label: 'Title' },
+    { key: 'working_day', disablePadding: false, label: 'Working Day' },
     { key: 'working_hours', disablePadding: false, label: 'Working Hours' },
-    { key: 'price', disablePadding: false, label: 'Price' },
     { key: 'pictures', disablePadding: false, label: 'Pictures' },
     { key: 'description', disablePadding: false, label: 'description' },
+    { key: 'edit', disablePadding: false, label: 'Редактировать' },
   ],
   rowsPerPage: 10,
   page: 0,
@@ -68,6 +71,11 @@ const placesReducer = (state = initialState, { type, payload, meta }) => {
 
       return { ...state, current: place }
     }
+
+    case CANCEL_PLACE: {
+      return { ...state, current: undefined }
+    }
+
     case CHANGE_PLACES_PAGE:
       return { ...state, page: payload }
 
@@ -77,9 +85,13 @@ const placesReducer = (state = initialState, { type, payload, meta }) => {
     case SELECT_PLACES:
       return { ...state, selected: payload }
 
+    case RESET_SELECT:
+      return { ...state, selected: [] }
+
     case SELECT_PLACE: {
       let selected = [...state.selected]
-      const isSelected = selected.map(p => p.id).includes(payload.id)
+      const isSelected = selected.map(p => p.id)
+        .includes(payload.id)
 
       if (!isSelected) {
         selected.push(payload)
@@ -92,7 +104,9 @@ const placesReducer = (state = initialState, { type, payload, meta }) => {
 
     case FILTER_PLACES: {
       let places = state.places.filter((data) => {
-        const searchString = Object.values(data).join(' ').toLowerCase()
+        const searchString = Object.values(data)
+          .join(' ')
+          .toLowerCase()
         return searchString.includes(payload.toLowerCase())
       })
 
@@ -107,14 +121,14 @@ const placesReducer = (state = initialState, { type, payload, meta }) => {
     case SORT_PLACES: {
       const places = [...Object.values(state.places)]
 
-      const sorted = places.sort((prev, next) =>
-        prev[payload.by].localeCompare(next[payload.by]))
+      // const sorted = places.sort((prev, next) =>
+      //   prev[payload.by].localeCompare(next[payload.by]))
 
       return {
         ...state,
         order: payload.order,
         orderBy: payload.by,
-        filteredPlaces: payload.order === 'asc' ? sorted : sorted.reverse(),
+        filteredPlaces: payload.order === 'asc' ? places : places.reverse(),
       }
     }
 

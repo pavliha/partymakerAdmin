@@ -65,13 +65,14 @@ const PlacePanel = ({ classes, place }) =>
       </a>
       <div className={classes.whenPriceContainer}>
         <div>
-          <Typography>Когда?</Typography>
+          <Typography>Рабочие дни</Typography>
+          <Typography variant="caption">{place.working_day}</Typography>
+        </div>
+        {place.working_hours && <div>
+          <Typography>Время работы</Typography>
           <Typography variant="caption">{place.working_hours}</Typography>
         </div>
-        <div>
-          <Typography>Сколько стоит?</Typography>
-          <Typography variant="caption">{place.price}</Typography>
-        </div>
+        }
       </div>
       <Typography color="inherit" align="justify">
         {place.description}
