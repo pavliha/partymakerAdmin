@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import React from 'react'
-import { object } from 'prop-types'
+import { array, object } from 'prop-types'
 import { Typography, withStyles } from '@material-ui/core'
 import PictureUpload from 'components/PictureUpload'
 
-import connector from './connector'
+import connector from '../connector'
 
 
 const styles = (theme) => ({
@@ -27,7 +27,7 @@ class AddImage extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, pictures } = this.props
 
     return (
       <div className={classes.root}>
@@ -35,6 +35,7 @@ class AddImage extends React.Component {
         <div className={classes.image}>
           <PictureUpload
             name="pictures"
+            pictures={pictures}
             onChange={this.handleUpload}
           />
         </div>
@@ -46,6 +47,11 @@ class AddImage extends React.Component {
 AddImage.propTypes = {
   classes: object.isRequired,
   actions: object.isRequired,
+  pictures: array,
+}
+
+AddImage.defaultProps = {
+  pictures: [],
 }
 
 export default withStyles(styles)(connector(AddImage))

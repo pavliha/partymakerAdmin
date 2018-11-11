@@ -6,6 +6,9 @@ import {
   DELETE_PLACES_PENDING,
   DELETE_PLACES_REJECTED,
   UPDATE_PLACE_FORM,
+  UPDATE_PLACE_FULFILLED,
+  UPDATE_PLACE_PENDING,
+  UPDATE_PLACE_REJECTED,
 } from './action'
 
 
@@ -20,6 +23,7 @@ const actionsPlaceReducer = (state = initialState, { type, payload }) => {
   switch (type) {
 
     case CREATE_PLACE_PENDING:
+    case UPDATE_PLACE_PENDING:
     case DELETE_PLACES_PENDING:
       return {
         ...state,
@@ -28,6 +32,7 @@ const actionsPlaceReducer = (state = initialState, { type, payload }) => {
 
 
     case CREATE_PLACE_REJECTED:
+    case UPDATE_PLACE_REJECTED:
     case DELETE_PLACES_REJECTED:
       return {
         ...state,
@@ -36,6 +41,7 @@ const actionsPlaceReducer = (state = initialState, { type, payload }) => {
       }
 
     case CREATE_PLACE_FULFILLED:
+    case UPDATE_PLACE_FULFILLED:
       return {
         ...state,
         // form: payload,

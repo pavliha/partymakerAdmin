@@ -58,7 +58,7 @@ class Geosuggest extends Component {
         onBlur={this.handleBlur}
         placeholder={placeholder}
         InputLabelProps={{ shrink: true }}
-        defaultValue={value.formatted_address || ''}
+        defaultValue={value.formatted_address || (value.address || '')}
       />
     )
   }

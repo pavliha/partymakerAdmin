@@ -8,6 +8,12 @@ html, body {
     font-size: 16pt;
 }
 
+a {
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+}
+
 @media only screen and (max-width: 1280px) {
     html, body {
         font-size: 15pt;
@@ -32,10 +38,4 @@ html, body {
 
 #root > div {
     height: 100%;
-}
-
-a {
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
 }

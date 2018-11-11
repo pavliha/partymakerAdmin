@@ -7,6 +7,7 @@ import place from 'src/redux/places/place/actions/action'
 
 const initMapStateToProps = store => ({
   form: store.actionsPlaceReducer.form,
+  current: store.placesReducer.current,
 })
 
 const initMapDispatchToProps = dispatch => ({
