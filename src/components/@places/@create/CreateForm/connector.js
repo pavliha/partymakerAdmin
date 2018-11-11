@@ -2,11 +2,12 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
 import places from 'src/redux/places/action'
-import place from 'src/redux/places/place/create/action'
+import place from 'src/redux/places/place/actions/action'
 
 
 const initMapStateToProps = store => ({
-  form: store.createPlaceReducer.form,
+  form: store.actionsPlaceReducer.form,
+  current: store.placesReducer.current,
 })
 
 const initMapDispatchToProps = dispatch => ({

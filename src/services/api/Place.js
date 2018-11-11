@@ -1,4 +1,4 @@
-/* eslint-disable class-methods-use-this */
+/* eslint-disable class-methods-use-this,no-return-await */
 import Http from 'services/Http'
 import qs from 'querystring'
 import formatPlace from 'formatters/place'
@@ -12,6 +12,16 @@ class Place {
   async create(form) {
     const response = await Http.post('/places', form)
     return formatPlace(response)
+  }
+
+  async update(id, form) {
+    const response = await Http.put(`/places/${id}`, form)
+    return formatPlace(response)
+  }
+
+  async delete(places) {
+    await places.forEach(async place =>
+      await Http.delete(`/places/${place.id}`))
   }
 
   async all(params) {

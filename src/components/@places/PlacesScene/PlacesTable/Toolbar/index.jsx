@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { number, object, string } from 'prop-types'
+import { number, object } from 'prop-types'
 import { Toolbar, Typography, withStyles } from '@material-ui/core'
-import ErrorCaption from './ErrorCaption'
-import PeopleSelected from './PeopleSelected'
+import PlaceSelected from './PlaceSelected'
 import Search from './Search'
 import connector from '../connector'
 
@@ -41,7 +40,7 @@ class EnhancedTableToolbar extends Component {
           Select member for this channel
         </Typography>
         <div className={classes.actions}>
-          <PeopleSelected selected={numSelected} />
+          <PlaceSelected selected={numSelected} />
           <Search onChange={this.handleSearch} value={this.state.searchValue} />
         </div>
       </Toolbar>

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Field } from 'formik'
-import FormikText from '../../formik/FormikText'
+import FormikText from '../formik/FormikText'
 
-const WorkingHours = () =>
-  <div>
+const Working = () =>
+  <React.Fragment>
     <Field
       component={FormikText}
       name="working_day"
@@ -16,8 +16,8 @@ const WorkingHours = () =>
       label="Часы работы"
       placeholder="8:00 - 23:00"
     />
-  </div>
+  </React.Fragment>
 
-WorkingHours.propTypes = {}
+Working.propTypes = {}
 
-export default WorkingHours
+export default Working

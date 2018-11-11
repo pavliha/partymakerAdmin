@@ -13,9 +13,9 @@ const theme = createMuiTheme({
     title: {
       letterSpacing: '0',
     },
-    headline: {
-      fontSize: '1.19rem',
-    },
+    // headline: {
+    //   fontSize: '1.19rem',
+    // },
     body1: {
       fontSize: '16px',
     },
@@ -43,9 +43,9 @@ const theme = createMuiTheme({
       dark: '#9306BC',
     },
     secondary: {
-      light: '#D404DC',
+      light: '#f0f0f0',
       main: '#fff',
-      dark: '#9306BC',
+      dark: '#ff0033',
     },
   },
 })

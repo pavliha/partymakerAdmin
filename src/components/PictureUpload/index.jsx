@@ -23,6 +23,7 @@ const styles = theme => ({
 class PictureUpload extends React.Component {
   constructor(props) {
     super(props)
+
     this.state = {
       pictures: props.pictures,
       loadingPicture: '',
@@ -32,6 +33,22 @@ class PictureUpload extends React.Component {
     this.handleClickInput = this.handleClickInput.bind(this)
   }
 
+  // getSnapshotBeforeUpdate(prevProps, prevState) {
+  //   this.setState({
+  //     pictures: this.props.pictures,
+  //   })
+  //
+  //   return null
+  // }
+
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.pictures !== this.props.pictures) {
+      this.setState({
+        pictures: nextProps.pictures,
+      })
+    }
+  }
 
   add = (image) => {
     if (image.type.match(/image.*/)) {

@@ -1,5 +1,6 @@
 /* eslint-disable no-fallthrough */
 import {
+  CANCEL_PLACE,
   CHANGE_PLACES_PAGE,
   CHANGE_PLACES_ROWS_PER_PAGE,
   FILTER_PLACES,
@@ -7,6 +8,7 @@ import {
   LOAD_PLACES_PENDING,
   LOAD_PLACES_REJECTED,
   OPEN_PLACE,
+  RESET_SELECT,
   SELECT_PLACE,
   SELECT_PLACES,
   SORT_PLACES,
@@ -25,9 +27,9 @@ const initialState = {
     { key: 'title', disablePadding: false, label: 'Title' },
     { key: 'working_day', disablePadding: false, label: 'Working Day' },
     { key: 'working_hours', disablePadding: false, label: 'Working Hours' },
-    { key: 'price', disablePadding: false, label: 'Price' },
     { key: 'pictures', disablePadding: false, label: 'Pictures' },
     { key: 'description', disablePadding: false, label: 'description' },
+    { key: 'edit', disablePadding: false, label: 'Редактировать' },
   ],
   rowsPerPage: 10,
   page: 0,
@@ -69,6 +71,11 @@ const placesReducer = (state = initialState, { type, payload, meta }) => {
 
       return { ...state, current: place }
     }
+
+    case CANCEL_PLACE: {
+      return { ...state, current: undefined }
+    }
+
     case CHANGE_PLACES_PAGE:
       return { ...state, page: payload }
 
@@ -77,6 +84,9 @@ const placesReducer = (state = initialState, { type, payload, meta }) => {
 
     case SELECT_PLACES:
       return { ...state, selected: payload }
+
+    case RESET_SELECT:
+      return { ...state, selected: [] }
 
     case SELECT_PLACE: {
       let selected = [...state.selected]
@@ -94,7 +104,9 @@ const placesReducer = (state = initialState, { type, payload, meta }) => {
 
     case FILTER_PLACES: {
       let places = state.places.filter((data) => {
-        const searchString = Object.values(data).join(' ').toLowerCase()
+        const searchString = Object.values(data)
+          .join(' ')
+          .toLowerCase()
         return searchString.includes(payload.toLowerCase())
       })
 
