@@ -15,6 +15,9 @@ import {
 const initialState = {
   loading: false,
   error: false,
+  place: null,
+  updated: false,
+  created: false,
   form: {},
   messages: null,
 }
@@ -41,10 +44,17 @@ const actionsPlaceReducer = (state = initialState, { type, payload }) => {
       }
 
     case CREATE_PLACE_FULFILLED:
+      return {
+        ...state,
+        created: payload.created,
+        place: payload.place,
+      }
+
     case UPDATE_PLACE_FULFILLED:
       return {
         ...state,
-        // form: payload,
+        updated: payload.updated,
+        place: payload.updatedPlace,
       }
 
     case DELETE_PLACES_FULFILLED:
