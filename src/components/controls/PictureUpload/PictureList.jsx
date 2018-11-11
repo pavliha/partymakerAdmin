@@ -2,7 +2,7 @@
 import React from 'react'
 import { array, func, object } from 'prop-types'
 import { withStyles } from '@material-ui/core'
-import Thumbnail from './Thumbnail'
+import Thumbnail from './PictureThumbnail'
 
 const styles = () => ({
   root: {
@@ -12,7 +12,7 @@ const styles = () => ({
 })
 
 class PictureList extends React.Component {
-  delete = (picture_url) => () => {
+  delete = picture_url => () => {
     this.props.onDelete(picture_url)
   }
 
@@ -24,8 +24,8 @@ class PictureList extends React.Component {
         {pictures.map(picture_url =>
           <Thumbnail
             key={picture_url}
-            className={classes.photo}
-            onDelete={this.delete(picture_url)}
+            className={classes.video}
+            onClick={this.delete(picture_url)}
             src={picture_url}
           />,
         )}

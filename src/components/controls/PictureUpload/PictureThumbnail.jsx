@@ -19,42 +19,42 @@ const styles = {
     left: 0,
     right: 0,
     bottom: 0,
-    background: 'rgba(0,0,0,0.5)',
+    background: 'rgba(245,247,250,0.5)',
     '&:hover': {
       opacity: 1,
     },
     alignItems: 'center',
     justifyContent: 'center',
-    borderRadius: '5%',
+    borderRadius: 10,
 
     zIndex: 1,
   },
   overlayIcon: {
     color: 'white',
   },
-  photo: {
+  video: {
     width: 70,
     height: 70,
-    borderRadius: '5%',
+    borderRadius: 10,
     margin: 2,
   },
 }
 
-const Thumbnail = ({ classes, src, onDelete }) =>
+const PictureThumbnail = ({ classes, src, onClick }) =>
   <div className={classes.root}>
     <div className={classes.overlay}>
-      <CloseIcon onClick={onDelete} className={classes.overlayIcon} />
+      <CloseIcon onClick={onClick} className={classes.overlayIcon} />
     </div>
     <Avatar
       src={src}
-      className={classes.photo}
+      className={classes.video}
     />
   </div>
 
-Thumbnail.propTypes = {
+PictureThumbnail.propTypes = {
   classes: object.isRequired,
+  onClick: func.isRequired,
   src: string.isRequired,
-  onDelete: func.isRequired,
 }
 
-export default withStyles(styles)(Thumbnail)
+export default withStyles(styles)(PictureThumbnail)
