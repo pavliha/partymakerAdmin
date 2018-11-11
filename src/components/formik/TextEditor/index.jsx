@@ -3,15 +3,15 @@ import { object } from 'prop-types'
 import TextEditor from 'components/controls/TextEditor'
 
 const FormikTextField = ({ field, form, ...props }) => {
-  const { name, onChange, onBlur } = field
-  const { errors, values, submitCount } = form
+  const { name } = field
+  const { errors, values, submitCount, setFieldValue, setFieldBlur } = form
 
   return (
     <TextEditor
       fullWidth
       {...props}
-      onChange={onChange}
-      onBlur={onBlur}
+      onChange={setFieldValue}
+      onBlur={setFieldBlur}
       value={values[name]}
       name={name}
       error={!!(errors[name] && (submitCount > 0))}

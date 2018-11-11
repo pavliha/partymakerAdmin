@@ -22,6 +22,7 @@ class TextEditor extends Component {
     const { name, onChange } = this.props
     this.setState({ editorState })
     const html = stateToHTML(editorState.getCurrentContent())
+
     onChange(name, html)
   }
 
