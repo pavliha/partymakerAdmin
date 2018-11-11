@@ -1,19 +1,17 @@
 import React from 'react'
 import { object } from 'prop-types'
 import { withRouter } from 'react-router-dom'
-import { Card, Typography, withStyles } from '@material-ui/core'
-
-import CreateForm from './CreateForm'
-import PlacesScene from '../PlacesScene'
+import { withStyles } from '@material-ui/core'
+import CreateForm from './Form'
 
 import connector from './connector'
 
 const styles = theme => ({
   root: {
-    display: 'block',
-    [theme.breakpoints.up('md')]: {
-      display: 'flex',
-    },
+    paddingTop: 30,
+    display: 'flex',
+    justifyContent: 'center',
+
   },
   card: {
     padding: '20px 30px',
@@ -58,13 +56,7 @@ class CreateScene extends React.Component {
     const { classes } = this.props
     return (
       <div className={classes.root}>
-        <Card className={classes.card}>
-          <CreateForm />
-        </Card>
-        <div className={classes.place_event}>
-          <Typography variant="subheading" className={classes.typography}>Все места</Typography>
-          <PlacesScene />
-        </div>
+        <CreateForm />
       </div>
     )
   }

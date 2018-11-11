@@ -32,33 +32,15 @@ class Geosuggest extends Component {
   }
 
   render() {
-    const {
-      helperText,
-      value,
-      fullWidth,
-      label,
-      name,
-      error,
-      placeholder,
-      disabled,
-    } = this.props
-
-    const helper = helperText || ''
+    const { value } = this.props
 
     return (
       <TextField
-        name={name}
-        error={error}
-        label={label}
-        margin="dense"
-        disabled={disabled}
-        helperText={helper}
-        fullWidth={fullWidth}
-        style={{ margin: 6 }}
+        {...this.props}
+        autoComplete="street-address"
+        onChange={this.handleChange}
         onBlur={this.handleBlur}
-        placeholder={placeholder}
-        InputLabelProps={{ shrink: true }}
-        defaultValue={value.formatted_address || (value.address || '')}
+        value={value.formatted_address || (value.address || '')}
       />
     )
   }
@@ -68,7 +50,7 @@ Geosuggest.propTypes = {
   fullWidth: bool,
   error: bool,
   disabled: bool,
-  name: string,
+  name: string.isRequired,
   placeholder: string,
   label: string,
   onChange: func,
@@ -82,7 +64,6 @@ Geosuggest.defaultProps = {
   fullWidth: false,
   error: false,
   disabled: false,
-  name: 'geosuggest',
   label: '',
   placeholder: '',
   helperText: '',

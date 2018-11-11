@@ -14,7 +14,7 @@ const formik = withFormik({
       description: Yup.string(),
     }),
 
-  mapPropsToValues: ({ actions, current, form }) => ({
+  mapPropsToValues: ({ current, form }) => ({
     title: current ? current.title : '',
     address: form ? form.address : {},
     working_day: current ? current.working_day : '',
@@ -48,7 +48,7 @@ const formik = withFormik({
         actions.place.update({ address: {}, pictures: [], videos: [] })
         resetForm()
       })
-        .catch(errors => {
+        .catch((errors) => {
           setSubmitting(false)
           setErrors(transformValidationApi(errors))
         })

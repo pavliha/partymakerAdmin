@@ -4,11 +4,13 @@ import Http from 'services/Http'
 import { array, func, object, string } from 'prop-types'
 import { FormControl, FormHelperText, withStyles } from '@material-ui/core'
 import PictureList from './PictureList'
-import AddPicture from './AddPicture'
+import UploadThumbnail from './UploadThumbnail'
 
-const styles = theme => ({
+const styles = () => ({
   root: {
-    marginBottom: theme.spacing.size4,
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: 16,
   },
   fileInput: {
     opacity: 0,
@@ -25,28 +27,8 @@ class PictureUpload extends React.Component {
     super(props)
 
     this.state = {
-      pictures: props.pictures,
-      loadingPicture: '',
-      percent: 0,
-    }
-
-    this.handleClickInput = this.handleClickInput.bind(this)
-  }
-
-  // getSnapshotBeforeUpdate(prevProps, prevState) {
-  //   this.setState({
-  //     pictures: this.props.pictures,
-  //   })
-  //
-  //   return null
-  // }
-
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.pictures !== this.props.pictures) {
-      this.setState({
-        pictures: nextProps.pictures,
-      })
+      uploadingPicture: '',
+      progress: 0,
     }
   }
 
@@ -54,7 +36,7 @@ class PictureUpload extends React.Component {
     if (image.type.match(/image.*/)) {
       const reader = new FileReader()
       reader.onload = () => {
-        this.setState({ loadingPicture: reader.result })
+        this.setState({ uploadingPicture: reader.result })
       }
       reader.readAsDataURL(image)
     }
@@ -64,59 +46,55 @@ class PictureUpload extends React.Component {
     const formData = new FormData()
     formData.append('image', image)
 
-    const response = await Http.post(this.props.url, formData, {
+    const response = await Http.post('/upload', formData, {
       onUploadProgress: (progressEvent) => {
-        const percent = Math.round((progressEvent.loaded * 100) / progressEvent.total)
-        this.setState({
-          percent,
-          loadingPicture: '',
-        })
+        const progress = Math.round((progressEvent.loaded * 100) / progressEvent.total)
+        this.setState({ progress, uploadingPicture: '' })
       },
     })
 
-    const { pictures } = this.state
+    this.setState({ progress: 0 })
 
-    pictures.push(response.url)
-    this.setState({ pictures, percent: 0 })
+    return response.url
   }
 
   handleAdd = async (e) => {
-    const { onChange, name } = this.props
+    const { onChange, name, value } = this.props
     const image = e.target.files[0]
     this.add(image)
-    await this.upload(image)
+    const picture_url = await this.upload(image)
 
-    onChange(name, this.state.pictures)
+    onChange(name, [...value, picture_url])
   }
 
   handleBlur = () => {
-    this.props.onBlur(this.props.name, true)
+    const { onBlur, name } = this.props
+    onBlur(name, true)
   }
 
   handleDelete = (picture_url) => {
-    const { onChange, name } = this.props
-    const pictures = this.state.pictures.filter(picture => picture !== picture_url)
-    this.setState({ pictures })
+    const { onChange, name, value } = this.props
+    const pictures = value.filter(picture => picture !== picture_url)
 
     onChange(name, pictures)
   }
 
-  handleClickInput() {
+  clickInput = () => {
     this.fileInput.click()
   }
 
   render() {
-    const { classes, name, helperText } = this.props
-    const { pictures, loadingPicture, percent } = this.state
+    const { classes, name, value, helperText } = this.props
+    const { uploadingPicture, progress } = this.state
 
     return (
       <FormControl className={classes.root}>
         <div className={classes.pictureList}>
-          <PictureList pictures={pictures} onDelete={this.handleDelete} />
-          <AddPicture
-            loadingPicture={loadingPicture}
-            percent={percent}
-            onClick={this.handleClickInput}
+          <PictureList pictures={value} onDelete={this.handleDelete} />
+          <UploadThumbnail
+            loadingPicture={uploadingPicture}
+            progress={progress}
+            onClick={this.clickInput}
           />
         </div>
 
@@ -137,18 +115,16 @@ class PictureUpload extends React.Component {
 }
 
 PictureUpload.propTypes = {
-  url: string,
   classes: object.isRequired,
-  pictures: array,
+  value: array,
   name: string.isRequired,
   helperText: string,
   onChange: func,
   onBlur: func,
 }
 PictureUpload.defaultProps = {
-  url: '/upload',
-  pictures: [],
   helperText: '',
+  value: [],
   onChange: () => {},
   onBlur: () => {},
 }
