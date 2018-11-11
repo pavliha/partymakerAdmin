@@ -14,13 +14,13 @@ const formik = withFormik({
       description: Yup.string(),
     }),
 
-  mapPropsToValues: ({ current, form }) => ({
+  mapPropsToValues: ({ actions, current, form }) => ({
     title: current ? current.title : '',
-    address: current ? current.align : {},
+    address: form ? form.address : {},
     working_day: current ? current.working_day : '',
     working_hours: current ? current.working_hours : '',
-    pictures: (current || form) ? ((current && current.pictures) || (form && form.pictures)) : [],
-    videos: (current || form) ? ((current && current.videos) || (form && form.videos)) : [],
+    pictures: form ? form.pictures : [],
+    videos: form ? form.videos : [],
     description: current ? current.description : '',
   }),
 
@@ -28,10 +28,10 @@ const formik = withFormik({
     const create = {
       title: values.title,
       address: {
-        address: values.address.formatted_address,
-        lng: values.address.geometry.location.lng(),
-        lat: values.address.geometry.location.lat(),
-        placeId: values.address.place_id,
+        address: values.address.formatted_address || values.address.address,
+        lng: values.address.geometry ? values.address.geometry.location.lng() : values.address.lng,
+        lat: values.address.geometry ? values.address.geometry.location.lat() : values.address.lat,
+        placeId: values.address.place_id || values.address.placeId,
       },
       working_day: values.working_day,
       working_hours: values.working_hours,
@@ -40,30 +40,24 @@ const formik = withFormik({
       description: values.description,
     }
 
+    function dispatch(func) {
+      func.then(() => {
+        setSubmitting(false)
+        actions.places.load()
+        actions.places.cancel()
+        actions.place.update({ address: {}, pictures: [], videos: [] })
+        resetForm()
+      })
+        .catch(errors => {
+          setSubmitting(false)
+          setErrors(transformValidationApi(errors))
+        })
+    }
+
     if (current) {
-      actions.place.updatePlace(current.id, create)
-        .then(() => {
-          setSubmitting(false)
-          resetForm()
-          actions.places.load()
-          actions.place.update({ pictures: [], videos: [] })
-        })
-        .catch(errors => {
-          setSubmitting(false)
-          setErrors(transformValidationApi(errors))
-        })
+      dispatch(actions.place.updatePlace(current.id, create))
     } else {
-      actions.place.create(create)
-        .then(() => {
-          setSubmitting(false)
-          resetForm()
-          actions.places.load()
-          actions.place.update({ pictures: [], videos: [] })
-        })
-        .catch(errors => {
-          setSubmitting(false)
-          setErrors(transformValidationApi(errors))
-        })
+      dispatch(actions.place.create(create))
     }
   },
   displayName: 'CreatePlace',

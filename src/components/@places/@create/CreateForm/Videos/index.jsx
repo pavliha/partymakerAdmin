@@ -30,10 +30,9 @@ class Videos extends React.Component {
   render() {
     const { classes, videos } = this.props
     return videos.map(video =>
-      <div className={classes.root}>
+      <div key={video} className={classes.root}>
         <TextField
           fullWidth
-          key={video}
           name="video"
           label="Видео"
           margin="dense"

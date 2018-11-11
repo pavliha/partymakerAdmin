@@ -63,10 +63,14 @@ class PlacesTable extends React.Component {
     actions.places.changeRowsPerPage(e.target.value)
   }
 
-  handleEditPlace = (placeId) => {
+  handleEditPlace = async (place) => {
     const { actions } = this.props
-    // actions.place.update({ pictures: [] })
-    actions.places.open(placeId)
+    await actions.places.open(place.id)
+    actions.place.update({
+      address: place.address,
+      pictures: place.pictures,
+      videos: place.videos,
+    })
   }
 
   render() {
@@ -104,7 +108,7 @@ class PlacesTable extends React.Component {
                       <TableCell>{place.pictures.length} шт</TableCell>
                       <TableCell>{truncate(place.description, { length: 30 })}</TableCell>
                       <TableCell>
-                        <IconButton onClick={() => this.handleEditPlace(place.id)}><CreateIcon /> </IconButton>
+                        <IconButton onClick={() => this.handleEditPlace(place)}><CreateIcon /> </IconButton>
                       </TableCell>
                     </TableRow>
                   )

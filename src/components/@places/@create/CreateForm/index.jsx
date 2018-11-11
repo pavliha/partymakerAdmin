@@ -1,6 +1,6 @@
 import React from 'react'
 import { func, object, shape, string } from 'prop-types'
-import { Button, Grid, withStyles, } from '@material-ui/core'
+import { Button, Grid, withStyles } from '@material-ui/core'
 
 import Geosuggest from 'components/Geosuggest'
 import FormikText from './formik/FormikText'
