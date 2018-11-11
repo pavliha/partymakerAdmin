@@ -10,7 +10,9 @@ const styles = {
 }
 
 const NotFound = ({ classes }) =>
-  <Typography className={classes.root} align="center" variant="display1"> Not found</Typography>
+  <div>
+    <Typography className={classes.root} align="center" variant="display1"> Not found</Typography>
+  </div>
 
 NotFound.propTypes = {
   classes: object.isRequired,
