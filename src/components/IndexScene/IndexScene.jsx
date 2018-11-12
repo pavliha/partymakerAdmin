@@ -40,7 +40,7 @@ class IndexScene extends React.Component {
       <div className={classes.root}>
         <BannerJumbotron />
         <div>
-          <Link to="/group/create">
+          <Link to="/places/create">
             <Button
               className={classes.button}
               fullWidth
@@ -48,7 +48,7 @@ class IndexScene extends React.Component {
               size="large"
               color="primary"
             >
-              Создать компанию
+              Добавить место
             </Button>
           </Link>
           <Link to="/places">
@@ -59,17 +59,7 @@ class IndexScene extends React.Component {
               size="large"
               color="primary"
             >
-              Найти место где погулять
-            </Button>
-          </Link>
-          <Link to="/events">
-            <Button
-              fullWidth
-              variant="contained"
-              size="large"
-              color="primary"
-            >
-             Посмотреть события Запорожья
+             Смотреть список мест
             </Button>
           </Link>
         </div>
