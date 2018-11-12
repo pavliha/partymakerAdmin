@@ -5,8 +5,7 @@ import header from 'src/redux/header/action'
 import places from 'src/redux/places/action'
 import place from 'src/redux/places/place/action'
 
-
-const initMapStateToProps = store => ({})
+const initMapStateToProps = () => ({})
 
 const initMapDispatchToProps = dispatch => ({
   actions: {

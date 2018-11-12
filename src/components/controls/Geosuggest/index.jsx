@@ -2,12 +2,14 @@
 import { TextField } from '@material-ui/core'
 import React, { Component } from 'react'
 import { any, bool, func, object, oneOfType, shape, string } from 'prop-types'
+import isString from 'lodash/isString'
 
 class Geosuggest extends Component {
   constructor(props) {
     super(props)
+    const value = isString(props.value) ? props.value : props.value.formatted_address
     this.state = {
-      text: props.value.formatted_address || '',
+      text: value,
     }
   }
 

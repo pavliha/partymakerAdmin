@@ -6,17 +6,17 @@ import formatPlace from 'formatters/place'
 class Place {
   async find(id) {
     const response = await Http.get(`/places/${id}`)
-    return formatPlace(response)
+    return formatPlace(response.place)
   }
 
   async create(form) {
     const response = await Http.post('/places', form)
-    return formatPlace(response)
+    return formatPlace(response.place)
   }
 
   async update(id, form) {
     const response = await Http.put(`/places/${id}`, form)
-    return formatPlace(response)
+    return formatPlace(response.place)
   }
 
   async delete(places) {

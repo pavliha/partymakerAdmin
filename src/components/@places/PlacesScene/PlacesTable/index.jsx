@@ -1,11 +1,11 @@
-/* eslint-disable react/no-access-state-in-setstate */
+/* eslint-disable function-paren-newline,jsx-a11y/anchor-is-valid,no-mixed-operators */
 import React from 'react'
 import { object, func } from 'prop-types'
 import { Link } from 'react-router-dom'
 import CreateIcon from 'mdi-react/CreateIcon'
 import DeleteIcon from 'mdi-react/DeleteIcon'
+import difference from 'lodash/difference'
 import {
-  Checkbox,
   IconButton,
   Table,
   TableBody,
@@ -17,7 +17,6 @@ import {
 import TableHead from './TableHead'
 import Toolbar from './Toolbar'
 import connector from './connector'
-
 
 const styles = theme => ({
   root: {
@@ -37,72 +36,53 @@ const styles = theme => ({
 
 class PlacesTable extends React.Component {
 
-  selectAll = places => ({ target: { checked } }) => {
+  changePage = (event, page) => {
     const { actions } = this.props
-    actions.places.selectAll(checked ? places : [])
+    actions.placesTable.changePage(page)
   }
 
-  select = place => () => {
+  changeRowsPerPage = (e) => {
     const { actions } = this.props
-    actions.places.select(place)
-  }
-
-  isSelected = (place) => {
-    const { places: { selected } } = this.props
-
-    return selected.map(p => p.id)
-      .includes(place.id)
-  }
-
-  handleChangePage = (event, page) => {
-    const { actions } = this.props
-    actions.places.changePage(page)
-  }
-
-  handleChangeRowsPerPage = (e) => {
-    const { actions } = this.props
-    actions.places.changeRowsPerPage(e.target.value)
+    actions.placesTable.changeRowsPerPage(e.target.value)
   }
 
   render() {
-    const { classes, places: { filteredPlaces, selected, rowsPerPage, page }, onEdit, onDelete } = this.props
-    const paginatedPlaces = filteredPlaces.slice(page * rowsPerPage, (page * rowsPerPage) + rowsPerPage)
+    const { classes, places, placesTable, onDelete } = this.props
+    const { filtered, selected, rowsPerPage, order, orderBy, page } = placesTable
+
+    const placesIds = Object.keys(places)
+    const filteredPlaces = difference(placesIds, filtered).map(id => places[id])
+    const sortedPlaces = filteredPlaces.sort((prev, next) => (prev[orderBy].localeCompare(next[orderBy])))
+    const sortedReverse = order === 'asc' ? sortedPlaces : sortedPlaces.reverse()
+    const paginatedPlaces = sortedReverse.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+
     return (
       <div className={classes.root}>
         <Toolbar numSelected={selected.length} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
-            <TableHead onSelectAllClick={this.selectAll(filteredPlaces)} />
+            <TableHead />
             <TableBody>
-              {
-                paginatedPlaces.map((place) => {
-                  const isSelected = this.isSelected(place)
-                  return (
-                    <TableRow
-                      key={place.id}
-                      hover
-                      selected={isSelected}
-                    >
-                      <TableCell padding="checkbox">
-                        <Checkbox color="primary" checked={isSelected} onClick={this.select(place)} />
-                      </TableCell>
-                      <TableCell padding="dense">
-                        <Link to={`/places/${place.id}`}>{place.title}</Link>
-                      </TableCell>
-                      <TableCell>
-                        {place.working_day}
-                      </TableCell>
-                      <TableCell>
-                        {place.working_hours}
-                      </TableCell>
-                      <TableCell>{place.pictures.length} шт</TableCell>
-                      <TableCell>
-                        <IconButton onClick={() => onEdit(place)}><CreateIcon /> </IconButton>
-                        <IconButton onClick={() => onDelete(place)}><DeleteIcon /> </IconButton>
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
+              {paginatedPlaces.map(place =>
+                <TableRow key={place.id} hover>
+                  <TableCell padding="dense">
+                    <Link to={`/places/${place.id}`}>{place.title}</Link>
+                  </TableCell>
+                  <TableCell>
+                    {place.working_day}
+                  </TableCell>
+                  <TableCell>
+                    {place.working_hours}
+                  </TableCell>
+                  <TableCell>{place.pictures.length} шт</TableCell>
+                  <TableCell>
+                    <Link to={`/places/${place.id}/edit`}>
+                      <IconButton><CreateIcon /> </IconButton>
+                    </Link>
+                    <IconButton onClick={() => onDelete(place)}><DeleteIcon /> </IconButton>
+                  </TableCell>
+                </TableRow>,
+              )}
             </TableBody>
           </Table>
         </div>
@@ -111,14 +91,10 @@ class PlacesTable extends React.Component {
           count={filteredPlaces.length}
           rowsPerPage={rowsPerPage}
           page={page}
-          backIconButtonProps={{
-            'aria-label': 'Previous Page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'Next Page',
-          }}
-          onChangePage={this.handleChangePage}
-          onChangeRowsPerPage={this.handleChangeRowsPerPage}
+          backIconButtonProps={{ 'aria-label': 'Previous Page' }}
+          nextIconButtonProps={{ 'aria-label': 'Next Page' }}
+          onChangePage={this.changePage}
+          onChangeRowsPerPage={this.changeRowsPerPage}
         />
       </div>
     )
@@ -129,8 +105,8 @@ PlacesTable.propTypes = {
   actions: object.isRequired,
   classes: object.isRequired,
   places: object.isRequired,
+  placesTable: object.isRequired,
   onDelete: func.isRequired,
-  onEdit: func.isRequired,
 }
 
 export default withStyles(styles)(connector(PlacesTable))

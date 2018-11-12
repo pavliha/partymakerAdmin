@@ -1,9 +1,8 @@
 import React from 'react'
 import { object } from 'prop-types'
-import { withRouter } from 'react-router-dom'
 import { withStyles } from '@material-ui/core'
-import PlaceForm from '../PlaceForm'
-
+import NotFound from 'components/NotFound'
+import PlaceForm from '../../PlaceForm'
 import connector from './connector'
 
 const styles = theme => ({
@@ -37,13 +36,14 @@ const styles = theme => ({
   },
 })
 
-class CreateScene extends React.Component {
+class EditScene extends React.Component {
   componentDidMount() {
     const { actions } = this.props
 
-    actions.header.setTitle('Создание места')
+    actions.header.setTitle('Редактирование места')
     actions.header.back()
-    document.title = 'Создание компании'
+    document.title = 'Редактирование места'
+    this.loadPlaces()
   }
 
   componentWillUnmount() {
@@ -52,22 +52,31 @@ class CreateScene extends React.Component {
     actions.header.menu()
   }
 
+  loadPlaces = () => {
+    const { actions, places: { places, current } } = this.props
+    const place = places[current]
+
+    if (!place) actions.places.load()
+  }
+
   render() {
-    const { classes } = this.props
+    const { classes, match, places: { places } } = this.props
+    const place = places[match.params.id]
+    if (!place) return <NotFound />
+
     return (
       <div className={classes.root}>
-        <PlaceForm />
+        <PlaceForm place={place} />
       </div>
     )
   }
 }
 
-CreateScene.propTypes = {
+EditScene.propTypes = {
   classes: object.isRequired,
   actions: object.isRequired,
+  places: object.isRequired,
+  match: object.isRequired,
 }
 
-const router = withRouter(CreateScene)
-const style = withStyles(styles)(router)
-
-export default connector(style)
+export default connector(withStyles(styles)(EditScene))

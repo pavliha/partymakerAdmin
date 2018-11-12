@@ -36,8 +36,8 @@ class EnhancedTableToolbar extends Component {
     const { numSelected, classes } = this.props
     return (
       <Toolbar className={classes.root}>
-        <Typography component="div" className={classes.title} variant="subheading">
-          Select member for this channel
+        <Typography component="div" className={classes.title} variant="title">
+          Все места
         </Typography>
         <div className={classes.actions}>
           <PlaceSelected selected={numSelected} />

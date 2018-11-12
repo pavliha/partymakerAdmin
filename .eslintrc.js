@@ -14,6 +14,7 @@ module.exports = {
     'camelcase': 0,
     'object-curly-newline': 0,
     'no-trailing-spaces': 0,
+    'radix': 0,
     'import/no-unresolved': [
       'error',
       {

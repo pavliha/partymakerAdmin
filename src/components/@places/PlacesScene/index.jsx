@@ -58,12 +58,6 @@ class PlacesScene extends React.Component {
     this.setState({ isOpenDialog: false })
   }
 
-
-  editPlace = async (place) => {
-    const { actions } = this.props
-    actions.places.edit(place)
-  }
-
   render() {
     const { classes, places: { loading, places } } = this.props
     if (loading) return <Loading />
@@ -71,7 +65,10 @@ class PlacesScene extends React.Component {
 
     return (
       <div className={classes.root}>
-        <PlacesTable onEdit={this.editPlace} onDelete={this.deletePlace} />
+        <PlacesTable
+          places={places}
+          onDelete={this.deletePlace}
+        />
         <DeleteDialog
           isOpen={this.state.isOpenDialog}
           onClose={this.handleClose}

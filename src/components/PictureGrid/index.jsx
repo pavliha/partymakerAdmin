@@ -1,4 +1,4 @@
-/* eslint-disable class-methods-use-this,function-paren-newline */
+/* eslint-disable class-methods-use-this,function-paren-newline,no-param-reassign,react/no-array-index-key */
 import React, { Component } from 'react'
 import { array, func, object } from 'prop-types'
 import { Avatar, withStyles } from '@material-ui/core'
@@ -70,14 +70,14 @@ class PictureGrid extends Component {
     const { classes } = this.props
 
     const videos = document.querySelectorAll('.grid-video')
-    videos.forEach(async video => {
+    videos.forEach(async (video) => {
       if (videos.length === 1) {
         video.classList.add(classes.oneVideo)
       }
     })
 
     const pictures = document.querySelectorAll('.grid-picture')
-    pictures.forEach(async avatar => {
+    pictures.forEach(async (avatar) => {
 
       if (pictures.length === 1) avatar.classList.add(classes.large)
       if (pictures.length === 1 && videos.length === 0) avatar.classList.add(classes.superLarge)
@@ -90,19 +90,16 @@ class PictureGrid extends Component {
     })
   }
 
-  primisifyPicture = (picture) =>
+  primisifyPicture = picture =>
     new Promise((resolve) => {
       picture.onload = (e) => {
         resolve(e.target)
       }
     })
 
-  handleClick = (picture_url) => () => {
+  handleClick = picture_url => () => {
     this.props.onClick(picture_url)
   }
-
-  idVideo = (url) =>
-    `https://www.youtube.com/embed/${url}`
 
   render() {
     const { classes, pictures, videos } = this.props
@@ -122,7 +119,7 @@ class PictureGrid extends Component {
             <iframe
               key={index}
               className={`${classes.gridVideo} grid-video`}
-              src={this.idVideo(video.url)}
+              src={`https://www.youtube.com/embed/${video.url}`}
               frameBorder="0"
               title="video"
               allowFullScreen

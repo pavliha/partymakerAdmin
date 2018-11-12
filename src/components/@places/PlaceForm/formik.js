@@ -14,37 +14,36 @@ const formik = withFormik({
       description: Yup.string(),
     }),
 
-  mapPropsToValues: ({ current, form }) => ({
-    title: current ? current.title : '',
-    address: form ? form.address : {},
-    working_day: current ? current.working_day : '',
-    working_hours: current ? current.working_hours : '',
-    pictures: form ? form.pictures : [],
-    videos: form ? form.videos : [],
-    description: current ? current.description : '',
+  mapPropsToValues: ({ place }) => ({
+    title: place ? place.title : '',
+    address: place ? place.address.address : {},
+    working_day: place ? place.working_day : '',
+    working_hours: place ? place.working_hours : '',
+    pictures: place ? place.pictures : [],
+    videos: place ? place.videos : [],
+    description: place ? place.description : '',
   }),
 
-  handleSubmit: (values, { props: { actions, form, current }, resetForm, setErrors, setSubmitting }) => {
+  handleSubmit: (values, { props: { actions, history, place }, setErrors, setSubmitting }) => {
     const create = {
       title: values.title,
-      address: {
+      address: values.address.formatted_address ? {
         address: values.address.formatted_address || values.address.address,
         lng: values.address.geometry ? values.address.geometry.location.lng() : values.address.lng,
         lat: values.address.geometry ? values.address.geometry.location.lat() : values.address.lat,
         placeId: values.address.place_id || values.address.placeId,
-      },
+      } : place.address,
       working_day: values.working_day,
       working_hours: values.working_hours,
-      pictures: form.pictures || [],
-      videos: form.videos || [],
+      pictures: values.pictures || [],
+      videos: values.videos || [],
       description: values.description,
     }
 
-    function dispatch(func) {
-      func.then((result) => {
+    function handle(func) {
+      func.then(({ value: newPlace }) => {
         setSubmitting(false)
-        actions.place.set(result)
-        resetForm()
+        history.push(`/places/${newPlace.id}`)
       })
         .catch((errors) => {
           setSubmitting(false)
@@ -52,10 +51,10 @@ const formik = withFormik({
         })
     }
 
-    if (current) {
-      dispatch(actions.place.updatePlace(current.id, create))
+    if (place) {
+      handle(actions.place.update(place.id, create))
     } else {
-      dispatch(actions.place.create(create))
+      handle(actions.place.create(create))
     }
   },
   displayName: 'CreatePlace',

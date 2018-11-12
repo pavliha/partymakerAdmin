@@ -68,15 +68,19 @@ const PlacePanel = ({ classes, place }) =>
           <Typography>Рабочие дни</Typography>
           <Typography variant="caption">{place.working_day}</Typography>
         </div>
-        {place.working_hours && <div>
-          <Typography>Время работы</Typography>
-          <Typography variant="caption">{place.working_hours}</Typography>
-        </div>
+        {place.working_hours && (
+          <div>
+            <Typography>Время работы</Typography>
+            <Typography variant="caption">{place.working_hours}</Typography>
+          </div>
+        )
         }
       </div>
-      <Typography color="inherit" align="justify">
-        {place.description}
-      </Typography>
+      <Typography
+        color="inherit"
+        align="justify"
+        dangerouslySetInnerHTML={{ __html: place.description }}
+      />
     </div>
   </section>
 
