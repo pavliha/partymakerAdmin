@@ -1,8 +1,8 @@
 /* eslint-disable function-paren-newline,react/prefer-stateless-function,no-return-assign */
 import React from 'react'
 import Http from 'services/Http'
-import { array, func, object, string } from 'prop-types'
-import { FormControl, FormHelperText, withStyles } from '@material-ui/core'
+import { bool, array, func, object, string } from 'prop-types'
+import { FormControl, FormHelperText, FormLabel, withStyles } from '@material-ui/core'
 import PictureList from './PictureList'
 import UploadThumbnail from './UploadThumbnail'
 
@@ -19,6 +19,9 @@ const styles = () => ({
   pictureList: {
     display: 'flex',
     flexWrap: 'wrap',
+  },
+  label: {
+    paddingBottom: 16,
   },
 })
 
@@ -84,11 +87,12 @@ class PictureUpload extends React.Component {
   }
 
   render() {
-    const { classes, name, value, helperText } = this.props
+    const { classes, name, error, label, value, helperText } = this.props
     const { uploadingPicture, progress } = this.state
 
     return (
       <FormControl className={classes.root}>
+        <FormLabel className={classes.label} component="legend">{label}</FormLabel>
         <div className={classes.pictureList}>
           <PictureList pictures={value} onDelete={this.handleDelete} />
           <UploadThumbnail
@@ -108,7 +112,7 @@ class PictureUpload extends React.Component {
           type="file"
         />
 
-        {helperText && <FormHelperText id="name-error-text">{helperText}</FormHelperText>}
+        {helperText && <FormHelperText error={error} id="name-error-text">{helperText}</FormHelperText>}
       </FormControl>
     )
   }
@@ -116,16 +120,19 @@ class PictureUpload extends React.Component {
 
 PictureUpload.propTypes = {
   classes: object.isRequired,
-  value: array,
   name: string.isRequired,
+  onChange: func.isRequired,
+  value: array,
   helperText: string,
-  onChange: func,
+  error: bool,
+  label: string,
   onBlur: func,
 }
 PictureUpload.defaultProps = {
   helperText: '',
+  label: '',
   value: [],
-  onChange: () => {},
+  error: false,
   onBlur: () => {},
 }
 

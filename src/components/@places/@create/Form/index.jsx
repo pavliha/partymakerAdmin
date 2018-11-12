@@ -71,11 +71,13 @@ class CreatePlaceForm extends React.Component {
         />
 
         <Field
+          label="Добавить фотографии места "
           component={PictureUpload}
           name="pictures"
         />
 
         <Field
+          placeholder="Вставьте сслыку из youtube сюда"
           component={YoutubeUpload}
           name="videos"
         />

@@ -25,7 +25,7 @@ const formik = withFormik({
         setSubmitting(false)
         history.push('/')
       })
-      .catch(errors => {
+      .catch((errors) => {
         setSubmitting(false)
         setErrors(transformValidationApi(errors))
       })
