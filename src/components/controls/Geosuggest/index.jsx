@@ -4,11 +4,24 @@ import React, { Component } from 'react'
 import { any, bool, func, object, oneOfType, shape, string } from 'prop-types'
 
 class Geosuggest extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      text: props.value.formatted_address || '',
+    }
+  }
+
   componentDidMount() {
     if (this.isGoogleAvailable()) {
       this.apiObj = this.initAutocomplete()
 
-      this.apiObj.addListener('place_changed', this.handleChange)
+      this.apiObj.addListener('place_changed', () => {
+        const obj = this.apiObj.getPlace()
+
+        this.setState({ text: obj.formatted_address })
+        this.props.onChange(this.props.name, this.apiObj.getPlace())
+
+      })
     }
   }
 
@@ -23,8 +36,8 @@ class Geosuggest extends Component {
 
   isGoogleAvailable = () => typeof window.google !== 'undefined' && typeof window.google.maps !== 'undefined'
 
-  handleChange = () => {
-    this.props.onChange(this.props.name, this.apiObj.getPlace())
+  handleChange = (e) => {
+    this.setState({ text: e.target.value })
   }
 
   handleBlur = () => {
@@ -32,15 +45,13 @@ class Geosuggest extends Component {
   }
 
   render() {
-    const { value } = this.props
-
     return (
       <TextField
         {...this.props}
         autoComplete="street-address"
         onChange={this.handleChange}
         onBlur={this.handleBlur}
-        value={value.formatted_address || (value.address || '')}
+        value={this.state.text}
       />
     )
   }

@@ -41,11 +41,9 @@ const formik = withFormik({
     }
 
     function dispatch(func) {
-      func.then(() => {
+      func.then((result) => {
         setSubmitting(false)
-        actions.places.load()
-        actions.places.cancel()
-        actions.place.update({ address: {}, pictures: [], videos: [] })
+        actions.place.set(result)
         resetForm()
       })
         .catch((errors) => {
