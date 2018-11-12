@@ -14,7 +14,7 @@ export const RESET_SELECT = 'RESET_SELECT'
 export const FILTER_PLACES = 'FILTER_PLACES'
 export const SORT_PLACES = 'SORT_PLACES'
 
-const load = (params) => ({
+const load = params => ({
   type: LOAD_PLACES,
   payload: Place.all(params),
 })
@@ -28,21 +28,21 @@ const cancel = () => ({
   type: CANCEL_PLACE,
 })
 
-const select = (employee) => ({
+const select = place => ({
   type: SELECT_PLACE,
-  payload: employee,
+  payload: place,
 })
 
-const selectAll = (employees) => ({
+const selectAll = places => ({
   type: SELECT_PLACES,
-  payload: employees,
+  payload: places,
 })
 
 const resetSelect = () => ({
   type: RESET_SELECT,
 })
 
-const filter = (keyword) => ({
+const filter = keyword => ({
   type: FILTER_PLACES,
   payload: keyword,
 })
@@ -52,12 +52,12 @@ const sort = ({ by, order }) => ({
   payload: { by, order },
 })
 
-const changePage = (page) => ({
+const changePage = page => ({
   type: CHANGE_PLACES_PAGE,
   payload: page,
 })
 
-const changeRowsPerPage = (rowsPerPage) => ({
+const changeRowsPerPage = rowsPerPage => ({
   type: CHANGE_PLACES_ROWS_PER_PAGE,
   payload: rowsPerPage,
 })
