@@ -39,7 +39,7 @@ class PlacesTable extends React.Component {
   }
 
   render() {
-    const { classes, places, placesTable, onDelete } = this.props
+    const { classes, places: { places }, placesTable, onDelete } = this.props
     const { filtered, selected, rowsPerPage, order, orderBy, page } = placesTable
 
     const placesIds = Object.keys(places)

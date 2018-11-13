@@ -25,9 +25,10 @@ const resetSelect = () => ({
   type: table_RESET_SELECT,
 })
 
-const filter = keyword => ({
+const filter = (places, keyword) => ({
   type: table_FILTER_PLACES,
   payload: keyword,
+  meta: places,
 })
 
 const sort = ({ by, order }) => ({

@@ -26,10 +26,10 @@ class EnhancedTableToolbar extends Component {
     searchValue: '',
   }
 
-  handleSearch = e => {
-    const { actions } = this.props
+  handleSearch = (e) => {
+    const { actions, places: { places } } = this.props
     this.setState({ searchValue: e.target.value })
-    actions.places.filter(e.target.value)
+    actions.placesTable.filter(places, e.target.value)
   }
 
   render() {
@@ -50,6 +50,7 @@ class EnhancedTableToolbar extends Component {
 
 EnhancedTableToolbar.propTypes = {
   classes: object.isRequired,
+  places: object.isRequired,
   numSelected: number.isRequired,
   actions: object.isRequired,
 }
