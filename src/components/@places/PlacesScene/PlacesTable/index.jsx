@@ -1,4 +1,4 @@
-/* eslint-disable function-paren-newline,jsx-a11y/anchor-is-valid,no-mixed-operators */
+/* eslint-disable function-paren-newline,jsx-a11y/anchor-is-valid,no-mixed-operators,react/no-array-index-key  */
 import React from 'react'
 import { object, func } from 'prop-types'
 import { Link } from 'react-router-dom'
@@ -51,7 +51,8 @@ class PlacesTable extends React.Component {
     const { filtered, selected, rowsPerPage, order, orderBy, page } = placesTable
 
     const placesIds = Object.keys(places)
-    const filteredPlaces = difference(placesIds, filtered).map(id => places[id])
+    const filteredPlaces = difference(placesIds, filtered)
+      .map(id => places[id])
     const sortedPlaces = filteredPlaces.sort((prev, next) => (prev[orderBy].localeCompare(next[orderBy])))
     const sortedReverse = order === 'asc' ? sortedPlaces : sortedPlaces.reverse()
     const paginatedPlaces = sortedReverse.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -63,8 +64,8 @@ class PlacesTable extends React.Component {
           <Table className={classes.table} aria-labelledby="tableTitle">
             <TableHead />
             <TableBody>
-              {paginatedPlaces.map(place =>
-                <TableRow key={place.id} hover>
+              {paginatedPlaces.map((place, index) =>
+                <TableRow key={place.id + index} hover>
                   <TableCell padding="dense">
                     <Link to={`/places/${place.id}`}>{place.title}</Link>
                   </TableCell>
