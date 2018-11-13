@@ -33,6 +33,12 @@ const styles = theme => ({
     },
   },
   gridVideo: {
+    display: 'flex',
+    backgroundColor: '#FAFAFA',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '12px',
+    textAlign: 'center',
     width: '100%',
     height: '100%',
     minHeight: 240,
@@ -116,14 +122,9 @@ class PictureGrid extends Component {
             />,
           )}
           {!isEmpty(videos) && videos.map((video, index) =>
-            <iframe
-              key={index}
-              className={`${classes.gridVideo} grid-video`}
-              src={`https://www.youtube.com/embed/${video}`}
-              frameBorder="0"
-              title="video"
-              allowFullScreen
-            />,
+            <div key={index} className={`${classes.gridVideo} grid-video`}>
+              {video}
+            </div>,
           )}
         </div>
       </React.Fragment>
