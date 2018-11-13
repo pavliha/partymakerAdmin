@@ -7,20 +7,6 @@ export const table_FILTER_PLACES = 'table/FILTER_PLACES'
 export const table_SORT_PLACES = 'table/SORT_PLACES'
 export const table_UNSELECT_PLACE = 'table/UNSELECT_PLACE'
 
-const select = place => ({
-  type: table_SELECT_PLACE,
-  payload: place,
-})
-const unselect = place => ({
-  type: table_UNSELECT_PLACE,
-  payload: place,
-})
-
-const selectAll = places => ({
-  type: table_SELECT_PLACES,
-  payload: places,
-})
-
 const resetSelect = () => ({
   type: table_RESET_SELECT,
 })
@@ -46,4 +32,4 @@ const changeRowsPerPage = rowsPerPage => ({
   payload: rowsPerPage,
 })
 
-export default { select, unselect, selectAll, resetSelect, filter, sort, changePage, changeRowsPerPage }
+export default { resetSelect, filter, sort, changePage, changeRowsPerPage }

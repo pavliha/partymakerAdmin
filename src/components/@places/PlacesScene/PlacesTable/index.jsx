@@ -43,8 +43,8 @@ class PlacesTable extends React.Component {
     const { filtered, selected, rowsPerPage, order, orderBy, page } = placesTable
 
     const placesIds = Object.keys(places)
-    const filteredPlaces = difference(placesIds, filtered)
-      .map(id => places[id])
+
+    const filteredPlaces = difference(placesIds, filtered).map(id => places[id])
     const sortedPlaces = filteredPlaces.sort((prev, next) => (prev[orderBy].localeCompare(next[orderBy])))
     const sortedReverse = order === 'asc' ? sortedPlaces : sortedPlaces.reverse()
     const paginatedPlaces = sortedReverse.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)

@@ -48,6 +48,9 @@ const styles = theme => ({
     justifyContent: 'space-between',
     marginBottom: 30,
   },
+  description: {
+    lineHeight: '1.7',
+  },
 })
 
 const PlacePanel = ({ classes, place }) =>
@@ -89,6 +92,7 @@ const PlacePanel = ({ classes, place }) =>
       </div>
       <Typography
         color="inherit"
+        className={classes.description}
         align="justify"
         dangerouslySetInnerHTML={{ __html: place.description }}
       />
