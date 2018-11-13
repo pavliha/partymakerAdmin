@@ -53,7 +53,7 @@ class Geosuggest extends Component {
         autoComplete="street-address"
         onChange={this.handleChange}
         onBlur={this.handleBlur}
-        value={this.state.text}
+        value={this.state.text || ''}
       />
     )
   }
