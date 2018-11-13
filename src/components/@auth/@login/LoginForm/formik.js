@@ -22,8 +22,7 @@ const formik = withFormik({
   handleSubmit: (values, { props: { history, actions }, setErrors, setSubmitting }) => {
     actions.auth.login(values)
       .then(() => {
-        setSubmitting(false)
-        history.push('/')
+        history.push('/places')
       })
       .catch((errors) => {
         setSubmitting(false)
