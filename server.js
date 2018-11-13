@@ -12,7 +12,7 @@ const options = {
   index: 'index.html',
   lastModified: true,
   maxAge: '1d',
-  setHeaders(res, path, stat) {
+  setHeaders(res, path) {
     res.set('x-timestamp', Date.now())
     res.header('Cache-Control', 'public, max-age=1d')
   },
@@ -25,4 +25,4 @@ app.use(methodOverride())
 
 app.use('/', express.static(`${__dirname}/public`, options))
 app.use('*', express.static(`${__dirname}/public`, options))
-app.listen(8080, '0.0.0.0', () => console.log('Listening on port 8080!'))
+app.listen(8000, '0.0.0.0', () => console.log('Listening on port 8000!'))
