@@ -48,7 +48,6 @@ class PlacesTable extends React.Component {
     const sortedPlaces = filteredPlaces.sort((prev, next) => (prev[orderBy].localeCompare(next[orderBy])))
     const sortedReverse = order === 'asc' ? sortedPlaces : sortedPlaces.reverse()
     const paginatedPlaces = sortedReverse.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-
     return (
       <div className={classes.root}>
         <Toolbar numSelected={selected.length} />
@@ -57,7 +56,7 @@ class PlacesTable extends React.Component {
             <TableHead />
             <TableBody>
               {paginatedPlaces.map((place, index) =>
-                <TableRow key={place.id + index} hover>
+                <TableRow key={index} hover>
                   <TableCell padding="dense">
                     <Link to={`/places/${place.id}`}>{place.title}</Link>
                   </TableCell>
