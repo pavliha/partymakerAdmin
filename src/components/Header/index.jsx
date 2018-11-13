@@ -84,6 +84,7 @@ class Header extends React.Component {
             </Typography>
 
             <div className={classes.actionButtons}>
+              <Link to="/places/create"><Button color="inherit">Создать место</Button></Link>
               <Link to="/places"><Button color="inherit">Места</Button></Link>
             </div>
             <UserMenu />

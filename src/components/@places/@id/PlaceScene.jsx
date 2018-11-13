@@ -5,13 +5,12 @@ import { withStyles } from '@material-ui/core'
 
 import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
-import PlacePanel from './PlacePanel'
 import PictureGrid from 'components/PictureGrid'
-
 import isEmpty from 'lodash/isEmpty'
+import PlacePanel from './PlacePanel'
 import connector from './connector'
 
-const styles = (theme) => ({
+const styles = theme => ({
   root: {
     display: 'flex',
     overflowX: 'hidden',
@@ -22,14 +21,14 @@ const styles = (theme) => ({
     },
   },
 
-  placeContainer: {
+  place: {
     height: '100%',
     [theme.breakpoints.up('sm')]: {
       minWidth: 500,
       flexBasis: '25%',
     },
   },
-  pictureGridContainer: {
+  grid: {
     flexGrow: 1,
     height: '100%',
     overflowY: 'auto',
@@ -50,12 +49,12 @@ class PlaceScene extends React.Component {
   }
 
   openPlace = async (place_id) => {
-    const { actions, place } = this.props
+    const { actions, places: { places, current } } = this.props
+    const place = places[current]
+
     actions.places.open(place_id)
-    if (!place) {
-      await actions.places.load()
-      actions.places.open(place_id)
-    }
+
+    if (!place) actions.places.load()
   }
 
   openModal = (picture_url) => {
@@ -64,17 +63,22 @@ class PlaceScene extends React.Component {
   }
 
   render() {
-    const { classes, place } = this.props
+    const { classes, places: { places, current } } = this.props
+    const place = places[current]
+
     if (isEmpty(place)) return <NotFound />
-    if (place.loading) return <Loading />
 
     return (
       <div className={classes.root}>
-        <div className={classes.placeContainer}>
+        <div className={classes.place}>
           <PlacePanel place={place} />
         </div>
-        <div className={classes.pictureGridContainer}>
-          <PictureGrid pictures={place.pictures} onClick={this.openModal} />
+        <div className={classes.grid}>
+          <PictureGrid
+            pictures={place.pictures}
+            videos={place.videos}
+            onClick={this.openModal}
+          />
         </div>
       </div>
     )
@@ -83,13 +87,9 @@ class PlaceScene extends React.Component {
 
 PlaceScene.propTypes = {
   classes: object.isRequired,
-  place: object,
+  places: object.isRequired,
   actions: object.isRequired,
   match: object.isRequired,
-}
-
-PlaceScene.defaultProps = {
-  place: null,
 }
 
 export default withStyles(styles)(connector(PlaceScene))

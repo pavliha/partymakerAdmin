@@ -2,6 +2,7 @@ import { applyMiddleware, createStore } from 'redux'
 import { persistStore } from 'redux-persist'
 import thunk from 'redux-thunk'
 import { createBrowserHistory } from 'history'
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { composeWithDevTools } from 'redux-devtools-extension'
 import promiseMiddleware from 'redux-promise-middleware'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
@@ -11,7 +12,6 @@ export const history = createBrowserHistory()
 
 const store = createStore(
   connectRouter(history)(reducers),
-  reducers,
   composeWithDevTools(applyMiddleware(
     thunk,
     routerMiddleware(history),

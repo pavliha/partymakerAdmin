@@ -1,10 +1,11 @@
 import React from 'react'
 import { object } from 'prop-types'
+import isEmpty from 'lodash/isEmpty'
 import { withStyles } from '@material-ui/core'
 import Loading from 'components/Loading'
 import PlacesTable from './PlacesTable'
-import isEmpty from 'lodash/isEmpty'
 import connector from './connector'
+import DeleteDialog from './DeleteDialog'
 
 const styles = theme => ({
   root: {
@@ -30,6 +31,12 @@ const styles = theme => ({
 })
 
 class PlacesScene extends React.Component {
+
+  state = {
+    isOpenDialog: false,
+    place: null,
+  }
+
   componentDidMount() {
     const { actions, places } = this.props
     if (!places.allLoaded) actions.places.load()
@@ -37,14 +44,37 @@ class PlacesScene extends React.Component {
     document.title = 'Места в Запорожье'
   }
 
+  deletePlace = (place) => {
+    this.setState({ isOpenDialog: true, place })
+  }
+
+  handleClose = () => {
+    this.setState({ isOpenDialog: false })
+  }
+
+  handleDeleteConfirm = () => {
+    const { actions } = this.props
+    actions.place.remove(this.state.place)
+    this.setState({ isOpenDialog: false })
+  }
+
   render() {
     const { classes, places: { loading, places } } = this.props
     if (loading) return <Loading />
     if (isEmpty(places)) return null
 
-    return <div className={classes.root}>
-      <PlacesTable />
-    </div>
+    return (
+      <div className={classes.root}>
+        <PlacesTable
+          onDelete={this.deletePlace}
+        />
+        <DeleteDialog
+          isOpen={this.state.isOpenDialog}
+          onClose={this.handleClose}
+          onConfirm={this.handleDeleteConfirm}
+        />
+      </div>
+    )
   }
 }
 

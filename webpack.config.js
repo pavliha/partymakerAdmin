@@ -47,15 +47,15 @@ module.exports = {
         use: ['babel-loader'],
       },
       {
-        test: /\.eot(\?v=\d+.\d+.\d+)?$/,
-        use: ['file-loader'],
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader'],
+        }),
       },
       {
-        test: /\.(scss|css)$/,
-        use: ['css-hot-loader'].concat(ExtractTextPlugin.extract({
-          fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader'],
-        })),
+        test: /\.eot(\?v=\d+.\d+.\d+)?$/,
+        use: ['file-loader'],
       },
       {
         test: /\.(jpg|png|woff|woff2|eot|ttf|svg)$/,

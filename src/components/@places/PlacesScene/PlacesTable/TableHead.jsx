@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { withStyles, Checkbox, TableCell, TableHead, TableRow, TableSortLabel, Tooltip } from '@material-ui/core'
-import { object, func } from 'prop-types'
+import { TableCell, TableHead, TableRow, TableSortLabel, Tooltip, withStyles } from '@material-ui/core'
+import { object } from 'prop-types'
 import connector from './connector'
 
-const styles = (theme) => ({
-
+const styles = theme => ({
   root: {
     borderTop: `1px solid ${theme.palette.secondary.extraLight}`,
   },
@@ -26,30 +25,19 @@ const styles = (theme) => ({
 
 class EnhancedTableHead extends Component {
   sort = property => () => {
-    const { actions, places: { order } } = this.props
+    const { actions, placesTable: { order } } = this.props
 
-    actions.places.sort({
+    actions.placesTable.sort({
       by: property,
       order: order === 'asc' ? 'desc' : 'asc',
     })
   }
 
   render() {
-    const { classes, onSelectAllClick, places: { rows, selected, order, orderBy, places } } = this.props
-    const numSelected = selected.length
-    const rowCount = places.length
-
+    const { classes, placesTable: { rows, order, orderBy } } = this.props
     return (
       <TableHead className={classes.root}>
         <TableRow classes={{ head: classes.head }}>
-          <TableCell padding="checkbox">
-            <Checkbox
-              color="primary"
-              indeterminate={numSelected > 0 && numSelected < rowCount}
-              checked={numSelected === rowCount}
-              onChange={onSelectAllClick}
-            />
-          </TableCell>
           {rows.map(row =>
             <TableCell
               classes={{ root: row.key !== 'title' ? classes.xsHidden : undefined, head: classes.cell }}
@@ -77,9 +65,8 @@ class EnhancedTableHead extends Component {
 
 EnhancedTableHead.propTypes = {
   classes: object.isRequired,
-  onSelectAllClick: func.isRequired,
   actions: object.isRequired,
-  places: object.isRequired,
+  placesTable: object.isRequired,
 }
 
 export default withStyles(styles)(connector(EnhancedTableHead))

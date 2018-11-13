@@ -1,41 +1,25 @@
-/* eslint-disable no-fallthrough */
-import {
-  OPEN_PLACE,
-  LOAD_PLACES_FULFILLED,
-  LOAD_PLACES_PENDING,
-  LOAD_PLACES_REJECTED,
-  CHANGE_PLACES_PAGE,
-  CHANGE_PLACES_ROWS_PER_PAGE,
-  SELECT_PLACES,
-  SELECT_PLACE,
-  FILTER_PLACES,
-  SORT_PLACES,
-} from './action'
+import arrayToObject from 'utils/arrayToObject'
+import isEmpty from 'lodash/isEmpty'
+import { CREATE_PLACE_FULFILLED, DELETE_PLACE_FULFILLED } from 'src/redux/places/place/action'
 import placeReducer from './place/reducer'
+import { LOAD_PLACES_FULFILLED, LOAD_PLACES_PENDING, LOAD_PLACES_REJECTED, OPEN_PLACE } from './action'
 
 const initialState = {
   loading: false,
   allLoaded: false,
   error: null,
   current: undefined,
-  order: 'asc',
-  orderBy: 'title',
-  selected: [],
-  rows: [
-    { key: 'title', disablePadding: false, label: 'Title' },
-    { key: 'working_hours', disablePadding: false, label: 'Working Hours' },
-    { key: 'price', disablePadding: false, label: 'Price' },
-    { key: 'pictures', disablePadding: false, label: 'Pictures' },
-    { key: 'description', disablePadding: false, label: 'description' },
-  ],
-  rowsPerPage: 10,
-  page: 0,
-  places: [],
-  filteredPlaces: [],
+  places: {},
 }
 
 const placesReducer = (state = initialState, { type, payload, meta }) => {
   switch (type) {
+
+    case OPEN_PLACE:
+      return {
+        ...state,
+        current: payload,
+      }
 
     case LOAD_PLACES_PENDING:
       return {
@@ -50,81 +34,44 @@ const placesReducer = (state = initialState, { type, payload, meta }) => {
         error: true,
       }
 
-    case LOAD_PLACES_FULFILLED: {
-      const places = payload.data
+    case LOAD_PLACES_FULFILLED:
       return {
         ...state,
         loading: false,
         allLoaded: true,
-        filteredPlaces: places,
+        places: arrayToObject(payload.data),
+      }
+
+    case CREATE_PLACE_FULFILLED: {
+      const places = { ...state.places }
+      places[payload.id] = placeReducer(payload, { type, payload, meta })
+
+      return {
+        ...state,
         places,
       }
     }
 
-    case OPEN_PLACE: {
-      const places = [...state.places]
-
-      const place = places.find(p => p.id === parseInt(payload))
-
-      return { ...state, current: place }
-    }
-    case CHANGE_PLACES_PAGE:
-      return { ...state, page: payload }
-
-    case CHANGE_PLACES_ROWS_PER_PAGE:
-      return { ...state, rowsPerPage: payload }
-
-    case SELECT_PLACES:
-      return { ...state, selected: payload }
-
-    case SELECT_PLACE: {
-      let selected = [...state.selected]
-      const isSelected = selected.map(p => p.id).includes(payload.id)
-
-      if (!isSelected) {
-        selected.push(payload)
-      } else {
-        selected = selected.filter(p => p.id !== payload.id)
-      }
-
-      return { ...state, selected }
-    }
-
-    case FILTER_PLACES: {
-      let places = state.places.filter((data) => {
-        const searchString = Object.values(data).join(' ').toLowerCase()
-        return searchString.includes(payload.toLowerCase())
-      })
-
-      if (!payload) places = [...state.places]
-
+    case DELETE_PLACE_FULFILLED: {
+      const places = { ...state.places }
+      delete places[meta.place_id]
       return {
         ...state,
-        filteredPlaces: places,
-      }
-    }
-
-    case SORT_PLACES: {
-      const places = [...Object.values(state.places)]
-
-      const sorted = places.sort((prev, next) =>
-        prev[payload.by].localeCompare(next[payload.by]))
-
-      return {
-        ...state,
-        order: payload.order,
-        orderBy: payload.by,
-        filteredPlaces: payload.order === 'asc' ? sorted : sorted.reverse(),
+        places,
       }
     }
 
     default: {
-      const places = [...state.places]
-      const place = placeReducer(state.current, { type, payload, meta })
-      const place_id = place.id || (meta && meta.place_id)
-      if (place_id) places[places.findIndex(p => p.id === parseInt(payload))] = place
+      const places = { ...state.places }
+      const place = placeReducer(places[state.current], { type, payload, meta })
 
-      return { ...state, places }
+      if (!isEmpty(state.current && place && place.id)) {
+        places[state.current] = place
+
+        return { ...state, places }
+      }
+
+      return state
     }
   }
 }

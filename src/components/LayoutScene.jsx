@@ -7,6 +7,8 @@ import Modal from 'components/Modal'
 import IndexScene from './IndexScene/IndexScene'
 import AuthLayout from './@auth/AuthLayout'
 import PlacesLayout from './@places/PlacesLayout'
+import SignedInRoute from './routes/SignedInRoute'
+import SignedOutRoute from './routes/SignedOutRoute'
 
 const LayoutScene = () =>
   <div>
@@ -14,8 +16,8 @@ const LayoutScene = () =>
     <Container>
       <Switch>
         <Route exact path="/" component={IndexScene} />
-        <Route path="/auth" component={AuthLayout} />
-        <Route path="/places" component={PlacesLayout} />
+        <SignedOutRoute path="/auth" component={AuthLayout} />
+        <SignedInRoute path="/places" component={PlacesLayout} />
       </Switch>
     </Container>
     <Modal />

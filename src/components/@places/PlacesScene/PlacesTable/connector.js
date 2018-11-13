@@ -1,14 +1,15 @@
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import places from 'src/redux/places/action'
+import placesTable from 'src/redux/table/places/action'
 
 const initMapStateToProps = store => ({
   places: store.placesReducer,
+  placesTable: store.table.placesReducer,
 })
 
 const initMapDispatchToProps = dispatch => ({
   actions: {
-    places: bindActionCreators(places, dispatch),
+    placesTable: bindActionCreators(placesTable, dispatch),
   },
 })
 

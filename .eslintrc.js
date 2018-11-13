@@ -2,41 +2,36 @@ module.exports = {
   'extends': 'eslint-config-airbnb',
   'parser': 'babel-eslint',
   'rules': {
-    'no-trailing-spaces': 0,
-    'import/no-unresolved': 0,
-    'import/extensions': 0,
-    'import/no-extraneous-dependencies': 0,
-    'import/no-duplicates': 0,
-    'import/no-named-as-default': 0,
-    'import/no-named-as-default-member': 0,
-    'max-len': [2, 120],
     'padded-blocks': 0,
-    'import/first': 0,
-    'react/jsx-closing-tag-location': 0,
-    'radix': 0,
-    'object-curly-newline': 0,
-    'jsx-a11y/click-events-have-key-events': 0,
-    'jsx-a11y/interactive-supports-focus': 0,
-    'linebreak-style': 0,
-    'react/forbid-prop-types': 0,
+    'import/extensions': 0,
+    'max-len': [2, 120],
     'no-extra-semi': 2,
-    'arrow-parens': 0,
-    'no-param-reassign': ['error', { 'props': false }],
     'semi': [2, 'never'],
-    'no-unused-vars': 0,
-    'camelcase': 0,
-    // disable rules from base configurations
-    'jsx-a11y/tabindex-no-positive': 'off',
+    'react/forbid-prop-types': 0,
+    'implicit-arrow-linebreak': 0,
     'react/jsx-wrap-multilines': 0,
-    'react/jsx-curly-spacing': [2, { 'when': 'never', 'allowMultiline': false }],
+    'no-underscore-dangle': 0,
+    'camelcase': 0,
     'jsx-a11y/anchor-is-valid': 0,
-    'react/no-array-index-key': 0,
-    'react/jsx-no-undef': ['warn', { 'allowGlobals': true }],
-
+    'object-curly-newline': 0,
+    'no-trailing-spaces': 0,
+    'radix': 0,
+    "linebreak-style": 0,
+    'import/no-unresolved': [
+      'error',
+      {
+        'ignore': ['src/', 'services', 'utils', 'formatters', 'components', 'assets']
+      }
+    ]
   },
-  'settings': {},
+  'settings': {
+    'import/resolver': {
+      'webpack': {
+        'config': 'webpack.config.js'
+      }
+    }
+  },
   'env': {
-    'jasmine': true,
     'jest': true,
     'browser': true,
     'node': true,

@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
-import { number, object, string } from 'prop-types'
+import { object } from 'prop-types'
 import { Toolbar, Typography, withStyles } from '@material-ui/core'
-import ErrorCaption from './ErrorCaption'
-import PeopleSelected from './PeopleSelected'
 import Search from './Search'
 import connector from '../connector'
 
@@ -27,21 +25,20 @@ class EnhancedTableToolbar extends Component {
     searchValue: '',
   }
 
-  handleSearch = e => {
-    const { actions } = this.props
+  handleSearch = (e) => {
+    const { actions, places: { places } } = this.props
     this.setState({ searchValue: e.target.value })
-    actions.places.filter(e.target.value)
+    actions.placesTable.filter(places, e.target.value)
   }
 
   render() {
-    const { numSelected, classes } = this.props
+    const { classes } = this.props
     return (
       <Toolbar className={classes.root}>
-        <Typography component="div" className={classes.title} variant="subheading">
-          Select member for this channel
+        <Typography component="div" className={classes.title} variant="title">
+          Все места
         </Typography>
         <div className={classes.actions}>
-          <PeopleSelected selected={numSelected} />
           <Search onChange={this.handleSearch} value={this.state.searchValue} />
         </div>
       </Toolbar>
@@ -51,7 +48,7 @@ class EnhancedTableToolbar extends Component {
 
 EnhancedTableToolbar.propTypes = {
   classes: object.isRequired,
-  numSelected: number.isRequired,
+  places: object.isRequired,
   actions: object.isRequired,
 }
 

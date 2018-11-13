@@ -1,14 +1,30 @@
 /* eslint-disable no-console */
 import { TextField } from '@material-ui/core'
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import { any, bool, func, object, oneOfType, shape, string } from 'prop-types'
+import isString from 'lodash/isString'
+import isEmpty from 'lodash/isEmpty'
 
 class Geosuggest extends Component {
+  constructor(props) {
+    super(props)
+    const value = isString(props.value) ? props.value : props.value.formatted_address
+    this.state = {
+      text: value,
+    }
+  }
+
   componentDidMount() {
     if (this.isGoogleAvailable()) {
       this.apiObj = this.initAutocomplete()
 
-      this.apiObj.addListener('place_changed', this.handleChange)
+      this.apiObj.addListener('place_changed', () => {
+        const obj = this.apiObj.getPlace()
+        if (!isEmpty(obj)) {
+          this.setState({ text: obj.formatted_address })
+          this.props.onChange(this.props.name, obj)
+        }
+      })
     }
   }
 
@@ -23,8 +39,8 @@ class Geosuggest extends Component {
 
   isGoogleAvailable = () => typeof window.google !== 'undefined' && typeof window.google.maps !== 'undefined'
 
-  handleChange = () => {
-    this.props.onChange(this.props.name, this.apiObj.getPlace())
+  handleChange = (e) => {
+    this.setState({ text: e.target.value })
   }
 
   handleBlur = () => {
@@ -32,58 +48,36 @@ class Geosuggest extends Component {
   }
 
   render() {
-    const {
-      helperText,
-      value,
-      fullWidth,
-      label,
-      name,
-      error,
-      placeholder,
-      disabled,
-      formik,
-    } = this.props
-
-    const helper = helperText || ''
-
     return (
       <TextField
-        name={name}
-        error={error}
-        fullWidth={fullWidth}
-        helperText={helper}
-        label={label}
-        placeholder={placeholder}
-        InputLabelProps={{ shrink: formik && true }}
-        defaultValue={value.formatted_address || ''}
+        {...this.props}
+        autoComplete="street-address"
+        onChange={this.handleChange}
         onBlur={this.handleBlur}
-        disabled={disabled}
+        value={this.state.text || ''}
       />
     )
   }
 }
 
 Geosuggest.propTypes = {
-  fullWidth: PropTypes.bool,
-  error: PropTypes.bool,
-  disabled: PropTypes.bool,
-  formik: PropTypes.bool,
-  name: PropTypes.string,
-  placeholder: PropTypes.string,
-  label: PropTypes.string,
-  onChange: PropTypes.func,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
-  onBlur: PropTypes.func,
-  helperText: PropTypes.any,
-  options: PropTypes.shape({}),
+  fullWidth: bool,
+  error: bool,
+  disabled: bool,
+  name: string.isRequired,
+  placeholder: string,
+  label: string,
+  onChange: func,
+  value: oneOfType([string, object]),
+  onBlur: func,
+  helperText: any,
+  options: shape({}),
 }
 
 Geosuggest.defaultProps = {
   fullWidth: false,
   error: false,
-  formik: false,
   disabled: false,
-  name: 'geosuggest',
   label: '',
   placeholder: '',
   helperText: '',
