@@ -73,13 +73,11 @@ const placesTableReducer = (state = initialState, { type, payload, meta }) => {
     }
 
     case table_FILTER_PLACES: {
-      const filter = []
       const searchObject = Object.values(meta)
 
       const places = searchObject.filter((data) => {
         const searchString = Object.values(data).join(' ').toLowerCase()
-        filter.push(searchString)
-        return !filter.join(' ').includes(payload.toLowerCase())
+        return !searchString.includes(payload.toLowerCase())
       })
 
       return {
