@@ -10,7 +10,7 @@ const formik = withFormik({
     .shape({
       title: Yup.string()
         .required('Это поле является обязательным'),
-      address: Yup.string()
+      address: Yup.object()
         .required('Это поле является обязательным'),
       working_day: Yup.string(),
       working_hours: Yup.string(),
@@ -29,9 +29,15 @@ const formik = withFormik({
 
   handleSubmit: (values, { props: { actions, history, place }, setErrors, setSubmitting }) => {
 
+    if (isEmpty(values.address)) {
+      setErrors({ address: 'Нужно выбрать адрес из списка' })
+      setSubmitting(false)
+      return
+    }
+
     const create = {
       title: values.title,
-      address: !isEmpty(values.address) && values.address.formatted_address ? {
+      address: values.address && values.address.formatted_address ? {
         address: values.address.formatted_address || values.address.address,
         lng: values.address.geometry ? values.address.geometry.location.lng() : values.address.lng,
         lat: values.address.geometry ? values.address.geometry.location.lat() : values.address.lat,
