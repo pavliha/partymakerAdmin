@@ -2,13 +2,14 @@
 import React from 'react'
 import { object } from 'prop-types'
 import { withRouter } from 'react-router'
-import { AppBar, Button, IconButton, Toolbar, Typography, withStyles } from '@material-ui/core'
-import connector from './connector'
-import UserMenu from './UserMenu'
 import shortTitle from 'utils/shortTitle'
 import ArrowBack from 'mdi-react/ArrowBackIcon'
 import MenuIcon from 'mdi-react/MenuIcon'
 import { Link } from 'react-router-dom'
+import { AppBar, IconButton, Toolbar, Typography, withStyles } from '@material-ui/core'
+import connector from './connector'
+import UserMenu from './UserMenu'
+
 
 const styles = theme => ({
   root: {
@@ -28,11 +29,6 @@ const styles = theme => ({
       textAlign: 'left',
     },
   },
-  actionButtons: {
-    [theme.breakpoints.down('sm')]: {
-      display: 'none',
-    },
-  },
   iconButton: {
     [theme.breakpoints.up('md')]: {
       display: 'none',
@@ -41,7 +37,7 @@ const styles = theme => ({
 })
 
 class Header extends React.Component {
-  goBack = (url) => () => {
+  goBack = url => () => {
     const { history } = this.props
     if (url) return history.push(url)
     return history.goBack()
@@ -83,10 +79,6 @@ class Header extends React.Component {
               <Link to={header.link}>{shortTitle(header.title)}</Link>
             </Typography>
 
-            <div className={classes.actionButtons}>
-              <Link to="/places/create"><Button color="inherit">Создать место</Button></Link>
-              <Link to="/places"><Button color="inherit">Места</Button></Link>
-            </div>
             <UserMenu />
           </Toolbar>
         </AppBar>

@@ -2,9 +2,7 @@
 import React from 'react'
 import { object } from 'prop-types'
 import { Link } from 'react-router-dom'
-import { withStyles } from '@material-ui/core/styles'
-import AccountCircle from 'mdi-react/AccountCircleIcon'
-import { IconButton, Menu, MenuItem } from '@material-ui/core'
+import { Button, withStyles } from '@material-ui/core'
 import connector from './connector'
 
 const styles = {
@@ -20,52 +18,27 @@ const styles = {
 }
 
 class UserMenu extends React.Component {
-  handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget })
-  }
-  handleClose = () => {
-    this.setState({ anchorEl: null })
-  }
   logout = () => {
     const { actions } = this.props
     actions.auth.logout()
   }
 
-  constructor(props) {
-    super(props)
-    this.state = {
-      anchorEl: null,
-    }
-  }
-
   render() {
     const { classes, auth } = this.props
-    const { anchorEl } = this.state
 
     return (
       <div className={classes.root}>
 
-        <IconButton onClick={this.handleMenu} color="inherit">
-          <AccountCircle />
-        </IconButton>
-
-        <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleClose}>
-          <div className={classes.menuItem} onClick={this.handleClose}>
-            {auth.user ?
-              <React.Fragment>
-                <MenuItem component={Link} to="/user">Мой профиль</MenuItem>
-                <MenuItem component={Link} to="/settings">Настройки</MenuItem>
-                <MenuItem onClick={this.logout}>Выйти</MenuItem>
-              </React.Fragment>
-              :
-              <React.Fragment>
-                <MenuItem component={Link} to="/auth/login">Войти</MenuItem>
-                <MenuItem component={Link} to="/auth/register">Зарегистрироваться</MenuItem>
-              </React.Fragment>
-            }
-          </div>
-        </Menu>
-
+        {auth.user
+          ? (
+            <React.Fragment>
+              <Link to="/places/create"><Button color="inherit">Создать место</Button></Link>
+              <Link to="/places"><Button color="inherit">Места</Button></Link>
+              <Button style={{ color: 'white' }} onClick={this.logout}>Выйти</Button>
+            </React.Fragment>
+          )
+          : <Link to="/auth/login"><Button style={{ color: 'white' }}> Войти </Button></Link>
+        }
       </div>
     )
   }

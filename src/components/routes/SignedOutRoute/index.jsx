@@ -8,7 +8,7 @@ const SignedOutRoute = ({ auth, ...rest }) => {
     return <Route {...rest} />
   }
 
-  return <Redirect to="/" />
+  return <Redirect to="/places" />
 }
 
 SignedOutRoute.propTypes = {
