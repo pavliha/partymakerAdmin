@@ -19,9 +19,8 @@ class Place {
     return formatPlace(response.place)
   }
 
-  async delete(places) {
-    await places.forEach(async place =>
-      await Http.delete(`/places/${place.id}`))
+  delete(id) {
+    return Http.delete(`/places/${id}`)
   }
 
   async all(params) {

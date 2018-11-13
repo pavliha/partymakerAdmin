@@ -1,19 +1,11 @@
 /* eslint-disable function-paren-newline,jsx-a11y/anchor-is-valid,no-mixed-operators */
 import React from 'react'
-import { object, func } from 'prop-types'
+import { func, object } from 'prop-types'
 import { Link } from 'react-router-dom'
 import CreateIcon from 'mdi-react/CreateIcon'
 import DeleteIcon from 'mdi-react/DeleteIcon'
 import difference from 'lodash/difference'
-import {
-  IconButton,
-  Table,
-  TableBody,
-  TableCell,
-  TablePagination,
-  TableRow,
-  withStyles,
-} from '@material-ui/core'
+import { IconButton, Table, TableBody, TableCell, TablePagination, TableRow, withStyles } from '@material-ui/core'
 import TableHead from './TableHead'
 import Toolbar from './Toolbar'
 import connector from './connector'
@@ -75,11 +67,12 @@ class PlacesTable extends React.Component {
                     {place.working_hours}
                   </TableCell>
                   <TableCell>{place.pictures.length} шт</TableCell>
+                  <TableCell>{place.videos.length} шт</TableCell>
                   <TableCell>
                     <Link to={`/places/${place.id}/edit`}>
                       <IconButton><CreateIcon /> </IconButton>
                     </Link>
-                    <IconButton onClick={() => onDelete(place)}><DeleteIcon /> </IconButton>
+                    <IconButton onClick={() => onDelete(place.id)}><DeleteIcon /> </IconButton>
                   </TableCell>
                 </TableRow>,
               )}

@@ -22,6 +22,7 @@ const initialState = {
     { key: 'working_day', disablePadding: false, label: 'Working Day' },
     { key: 'working_hours', disablePadding: false, label: 'Working Hours' },
     { key: 'pictures', disablePadding: false, label: 'Pictures' },
+    { key: 'videos', disablePadding: false, label: 'Videos' },
     { key: 'edit', disablePadding: false, label: 'Действия' },
   ],
   rowsPerPage: 10,

@@ -1,12 +1,7 @@
 import arrayToObject from 'utils/arrayToObject'
 import isEmpty from 'lodash/isEmpty'
 import placeReducer from './place/reducer'
-import {
-  LOAD_PLACES_FULFILLED,
-  LOAD_PLACES_PENDING,
-  LOAD_PLACES_REJECTED,
-  OPEN_PLACE,
-} from './action'
+import { LOAD_PLACES_FULFILLED, LOAD_PLACES_PENDING, LOAD_PLACES_REJECTED, OPEN_PLACE } from './action'
 
 const initialState = {
   loading: false,

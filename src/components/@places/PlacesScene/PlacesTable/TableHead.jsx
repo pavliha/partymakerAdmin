@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { withStyles, TableCell, TableHead, TableRow, TableSortLabel, Tooltip } from '@material-ui/core'
+import { TableCell, TableHead, TableRow, TableSortLabel, Tooltip, withStyles } from '@material-ui/core'
 import { object } from 'prop-types'
 import connector from './connector'
 
@@ -25,9 +25,9 @@ const styles = theme => ({
 
 class EnhancedTableHead extends Component {
   sort = property => () => {
-    const { actions, places: { order } } = this.props
+    const { actions, placesTable: { order } } = this.props
 
-    actions.places.sort({
+    actions.placesTable.sort({
       by: property,
       order: order === 'asc' ? 'desc' : 'asc',
     })

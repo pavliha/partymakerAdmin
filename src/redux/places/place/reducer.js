@@ -1,15 +1,13 @@
 import {
-  SET_PLACE,
-  LOAD_PLACE_FULFILLED,
-  LOAD_PLACE_PENDING,
-  LOAD_PLACE_REJECTED,
   CREATE_PLACE_FULFILLED,
   CREATE_PLACE_PENDING,
   CREATE_PLACE_REJECTED,
-  DELETE_PLACE_PENDING,
-  DELETE_PLACE_REJECTED,
-  UPDATE_PLACE_PENDING,
+  LOAD_PLACE_FULFILLED,
+  LOAD_PLACE_PENDING,
+  LOAD_PLACE_REJECTED,
+  SET_PLACE,
   UPDATE_PLACE_FULFILLED,
+  UPDATE_PLACE_PENDING,
   UPDATE_PLACE_REJECTED,
 } from './action'
 
@@ -30,7 +28,6 @@ const placeReducer = (state = {}, { type, payload }) => {
     case LOAD_PLACE_PENDING:
     case CREATE_PLACE_PENDING:
     case UPDATE_PLACE_PENDING:
-    case DELETE_PLACE_PENDING:
       return {
         ...state,
         loading: true,
@@ -39,7 +36,6 @@ const placeReducer = (state = {}, { type, payload }) => {
     case LOAD_PLACE_REJECTED:
     case CREATE_PLACE_REJECTED:
     case UPDATE_PLACE_REJECTED:
-    case DELETE_PLACE_REJECTED:
       return {
         ...state,
         loading: false,

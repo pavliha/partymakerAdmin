@@ -54,7 +54,7 @@ class PlacesScene extends React.Component {
 
   handleDeleteConfirm = () => {
     const { actions } = this.props
-    actions.places.remove(this.state.place)
+    actions.place.remove(this.state.place)
     this.setState({ isOpenDialog: false })
   }
 
