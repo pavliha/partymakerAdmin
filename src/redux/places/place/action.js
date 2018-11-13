@@ -46,6 +46,7 @@ const update = (id, form) => ({
 const remove = id => ({
   type: DELETE_PLACE,
   payload: Place.delete(id),
+  meta: { place_id: id },
 })
 
 export default { load, set, create, update, remove }

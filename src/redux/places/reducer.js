@@ -1,6 +1,6 @@
 import arrayToObject from 'utils/arrayToObject'
 import isEmpty from 'lodash/isEmpty'
-import { CREATE_PLACE_FULFILLED } from 'src/redux/places/place/action'
+import { CREATE_PLACE_FULFILLED, DELETE_PLACE_FULFILLED } from 'src/redux/places/place/action'
 import placeReducer from './place/reducer'
 import { LOAD_PLACES_FULFILLED, LOAD_PLACES_PENDING, LOAD_PLACES_REJECTED, OPEN_PLACE } from './action'
 
@@ -46,6 +46,15 @@ const placesReducer = (state = initialState, { type, payload, meta }) => {
       const places = { ...state.places }
       places[payload.id] = placeReducer(payload, { type, payload, meta })
 
+      return {
+        ...state,
+        places,
+      }
+    }
+
+    case DELETE_PLACE_FULFILLED: {
+      const places = { ...state.places }
+      delete places[meta.place_id]
       return {
         ...state,
         places,
