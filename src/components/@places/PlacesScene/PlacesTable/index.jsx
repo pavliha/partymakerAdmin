@@ -39,8 +39,9 @@ class PlacesTable extends React.Component {
   }
 
   render() {
-    const { classes, places, placesTable, onDelete } = this.props
-    const { filtered, rowsPerPage, order, orderBy, page } = placesTable
+    const { classes, places: { places }, placesTable, onDelete } = this.props
+    const { filtered, selected, rowsPerPage, order, orderBy, page } = placesTable
+
     const placesIds = Object.keys(places)
 
     const filteredPlaces = difference(placesIds, filtered).map(id => places[id])
@@ -50,13 +51,13 @@ class PlacesTable extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Toolbar />
+        <Toolbar numSelected={selected.length} />
         <div className={classes.tableWrapper}>
           <Table className={classes.table} aria-labelledby="tableTitle">
             <TableHead />
             <TableBody>
               {paginatedPlaces.map((place, index) =>
-                <TableRow key={index} hover>
+                <TableRow key={place.id + index} hover>
                   <TableCell padding="dense">
                     <Link to={`/places/${place.id}`}>{place.title}</Link>
                   </TableCell>

@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import placesTable from 'src/redux/table/places/action'
 
 const initMapStateToProps = store => ({
+  places: store.placesReducer,
   placesTable: store.table.placesReducer,
 })
 
