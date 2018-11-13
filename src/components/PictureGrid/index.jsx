@@ -119,7 +119,7 @@ class PictureGrid extends Component {
             <iframe
               key={index}
               className={`${classes.gridVideo} grid-video`}
-              src={`https://www.youtube.com/embed/${video.url}`}
+              src={`https://www.youtube.com/embed/${video}`}
               frameBorder="0"
               title="video"
               allowFullScreen
