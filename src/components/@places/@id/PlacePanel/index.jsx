@@ -56,7 +56,7 @@ const PlacePanel = ({ classes, place }) =>
       <Typography color="inherit" variant="title" className={classes.title}>
         {place.title}
         <Link to={`/places/${place.id}/edit`}>
-          <IconButton><CreateIcon /> </IconButton>
+          <IconButton><CreateIcon /></IconButton>
         </Link>
       </Typography>
       <a href={`http://www.google.com/maps/?q=${place.address.address}`}>

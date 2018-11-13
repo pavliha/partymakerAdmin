@@ -3,6 +3,7 @@ import { TextField } from '@material-ui/core'
 import React, { Component } from 'react'
 import { any, bool, func, object, oneOfType, shape, string } from 'prop-types'
 import isString from 'lodash/isString'
+import isEmpty from 'lodash/isEmpty'
 
 class Geosuggest extends Component {
   constructor(props) {
@@ -19,7 +20,7 @@ class Geosuggest extends Component {
 
       this.apiObj.addListener('place_changed', () => {
         const obj = this.apiObj.getPlace()
-        if (obj) {
+        if (!isEmpty(obj)) {
           this.setState({ text: obj.formatted_address })
           this.props.onChange(this.props.name, obj)
         }

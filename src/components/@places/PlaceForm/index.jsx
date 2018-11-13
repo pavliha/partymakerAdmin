@@ -1,6 +1,7 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react'
 import { Field, Form } from 'formik'
-import { object } from 'prop-types'
+import { object, bool } from 'prop-types'
 import { withRouter } from 'react-router-dom'
 import { Button, withStyles } from '@material-ui/core'
 import TextField from 'components/formik/TextField'
@@ -28,7 +29,7 @@ const styles = theme => ({
   },
 })
 
-const CreatePlaceForm = ({ classes, place }) =>
+const CreatePlaceForm = ({ classes, place, isSubmitting }) =>
 
   <Form className={classes.root}>
     <Field
@@ -83,15 +84,17 @@ const CreatePlaceForm = ({ classes, place }) =>
         size="large"
         type="submit"
         color="primary"
+        disabled={isSubmitting}
         variant="contained"
       >
-        {place ? 'Обновить место' : 'Создать место'}
+        {isSubmitting ? 'Загрузка...' : (place ? 'Обновить место' : 'Создать место')}
       </Button>
     </div>
   </Form>
 
 CreatePlaceForm.propTypes = {
   classes: object.isRequired,
+  isSubmitting: bool.isRequired,
   place: object,
 }
 CreatePlaceForm.defaultProps = {

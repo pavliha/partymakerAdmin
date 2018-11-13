@@ -1,6 +1,7 @@
 import { withFormik } from 'formik'
 import * as Yup from 'yup'
 import transformValidationApi from 'utils/transformValidationApi'
+import isEmpty from 'lodash/isEmpty'
 
 const formik = withFormik({
   enableReinitialize: true,
@@ -8,6 +9,8 @@ const formik = withFormik({
   validationSchema: Yup.object()
     .shape({
       title: Yup.string()
+        .required('Это поле является обязательным'),
+      address: Yup.string()
         .required('Это поле является обязательным'),
       working_day: Yup.string(),
       working_hours: Yup.string(),
@@ -25,10 +28,10 @@ const formik = withFormik({
   }),
 
   handleSubmit: (values, { props: { actions, history, place }, setErrors, setSubmitting }) => {
-    console.log(values.address)
+
     const create = {
       title: values.title,
-      address: values.address && values.address.formatted_address ? {
+      address: !isEmpty(values.address) && values.address.formatted_address ? {
         address: values.address.formatted_address || values.address.address,
         lng: values.address.geometry ? values.address.geometry.location.lng() : values.address.lng,
         lat: values.address.geometry ? values.address.geometry.location.lat() : values.address.lat,
