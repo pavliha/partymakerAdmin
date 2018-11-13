@@ -19,10 +19,10 @@ class Geosuggest extends Component {
 
       this.apiObj.addListener('place_changed', () => {
         const obj = this.apiObj.getPlace()
-
-        this.setState({ text: obj.formatted_address })
-        this.props.onChange(this.props.name, this.apiObj.getPlace())
-
+        if (obj) {
+          this.setState({ text: obj.formatted_address })
+          this.props.onChange(this.props.name, obj)
+        }
       })
     }
   }

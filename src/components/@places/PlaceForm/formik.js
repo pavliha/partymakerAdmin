@@ -25,9 +25,10 @@ const formik = withFormik({
   }),
 
   handleSubmit: (values, { props: { actions, history, place }, setErrors, setSubmitting }) => {
+    console.log(values.address)
     const create = {
       title: values.title,
-      address: values.address.formatted_address ? {
+      address: values.address && values.address.formatted_address ? {
         address: values.address.formatted_address || values.address.address,
         lng: values.address.geometry ? values.address.geometry.location.lng() : values.address.lng,
         lat: values.address.geometry ? values.address.geometry.location.lat() : values.address.lat,

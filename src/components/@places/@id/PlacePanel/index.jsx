@@ -1,8 +1,10 @@
 /* eslint-disable no-console */
 import React from 'react'
 import { object, shape, string } from 'prop-types'
-import { Typography, withStyles } from '@material-ui/core'
+import { IconButton, Typography, withStyles } from '@material-ui/core'
 import LocationIcon from 'mdi-react/LocationIcon'
+import CreateIcon from 'mdi-react/CreateIcon'
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
   root: {
@@ -51,7 +53,12 @@ const styles = theme => ({
 const PlacePanel = ({ classes, place }) =>
   <section className={classes.root}>
     <div className={classes.content}>
-      <Typography color="inherit" variant="title" className={classes.title}> {place.title} </Typography>
+      <Typography color="inherit" variant="title" className={classes.title}>
+        {place.title}
+        <Link to={`/places/${place.id}/edit`}>
+          <IconButton><CreateIcon /> </IconButton>
+        </Link>
+      </Typography>
       <a href={`http://www.google.com/maps/?q=${place.address.address}`}>
         <div className={classes.location}>
           <Typography color="inherit" variant="subheading" className={classes.locationIcon}>
@@ -63,11 +70,15 @@ const PlacePanel = ({ classes, place }) =>
           </Typography>
         </div>
       </a>
+
       <div className={classes.whenPriceContainer}>
-        <div>
-          <Typography>Рабочие дни</Typography>
-          <Typography variant="caption">{place.working_day}</Typography>
-        </div>
+        {place.working_day && (
+          <div>
+            <Typography>Рабочие дни</Typography>
+            <Typography variant="caption">{place.working_day}</Typography>
+          </div>
+        )}
+
         {place.working_hours && (
           <div>
             <Typography>Время работы</Typography>
