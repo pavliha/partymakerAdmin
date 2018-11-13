@@ -9,9 +9,10 @@ import AuthLayout from './@auth/AuthLayout'
 import PlacesLayout from './@places/PlacesLayout'
 import SignedInRoute from './routes/SignedInRoute'
 import SignedOutRoute from './routes/SignedOutRoute'
+import Background from './Background'
 
 const LayoutScene = () =>
-  <div>
+  <Background>
     <Header />
     <Container>
       <Switch>
@@ -21,6 +22,6 @@ const LayoutScene = () =>
       </Switch>
     </Container>
     <Modal />
-  </div>
+  </Background>
 
 export default withTheme(LayoutScene)
