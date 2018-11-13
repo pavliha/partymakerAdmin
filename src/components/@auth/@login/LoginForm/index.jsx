@@ -1,13 +1,13 @@
 /* eslint-disable react/sort-comp,padded-blocks,no-console */
 import React from 'react'
+import { Field } from 'formik'
 import PropTypes from 'prop-types'
-import { Link, withRouter } from 'react-router-dom'
-import { Button, CardActions, CardContent, Typography } from '@material-ui/core'
+import { withRouter } from 'react-router-dom'
+import { Button, CardActions, CardContent } from '@material-ui/core'
 import FormikText from 'components/@auth/formik/FormikText'
 import FormikPasswordToggle from 'components/@auth/formik/FormikPasswordToggle'
 import formik from './formik'
 import connector from '../../connector'
-import { Field } from 'formik'
 
 const LoginForm = ({ isSubmitting, handleSubmit }) =>
   <form onSubmit={handleSubmit}>
@@ -31,9 +31,6 @@ const LoginForm = ({ isSubmitting, handleSubmit }) =>
         Войти
       </Button>
     </CardActions>
-    <Link to="/auth/register">
-      <Typography gutterBottom align="center">Забыли пароль? | Нет аккаунта?</Typography>
-    </Link>
   </form>
 
 LoginForm.propTypes = {
