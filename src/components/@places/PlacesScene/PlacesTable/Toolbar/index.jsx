@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { number, object } from 'prop-types'
+import { object } from 'prop-types'
 import { Toolbar, Typography, withStyles } from '@material-ui/core'
-import PlaceSelected from './PlaceSelected'
 import Search from './Search'
 import connector from '../connector'
 
@@ -33,14 +32,13 @@ class EnhancedTableToolbar extends Component {
   }
 
   render() {
-    const { numSelected, classes } = this.props
+    const { classes } = this.props
     return (
       <Toolbar className={classes.root}>
         <Typography component="div" className={classes.title} variant="title">
           Все места
         </Typography>
         <div className={classes.actions}>
-          <PlaceSelected selected={numSelected} />
           <Search onChange={this.handleSearch} value={this.state.searchValue} />
         </div>
       </Toolbar>
@@ -51,7 +49,6 @@ class EnhancedTableToolbar extends Component {
 EnhancedTableToolbar.propTypes = {
   classes: object.isRequired,
   places: object.isRequired,
-  numSelected: number.isRequired,
   actions: object.isRequired,
 }
 
