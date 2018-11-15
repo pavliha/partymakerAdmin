@@ -24,6 +24,7 @@ const formik = withFormik({
     working_hours: place ? place.working_hours : '',
     pictures: place ? place.pictures : [],
     videos: place ? place.videos : [],
+    details: place ? place.details : [],
     description: place ? place.description : '',
   }),
 
@@ -43,8 +44,7 @@ const formik = withFormik({
         lat: values.address.geometry ? values.address.geometry.location.lat() : values.address.lat,
         placeId: values.address.place_id || values.address.placeId,
       } : place.address,
-      working_day: values.working_day,
-      working_hours: values.working_hours,
+      details: values.details,
       pictures: values.pictures || [],
       videos: values.videos || [],
       description: values.description,
