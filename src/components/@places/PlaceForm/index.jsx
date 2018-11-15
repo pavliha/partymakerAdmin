@@ -9,6 +9,8 @@ import Geosuggest from 'components/formik/Geosuggest'
 import PictureUpload from 'components/formik/PictureUpload'
 import YoutubeUpload from 'components/formik/YoutubeUpload'
 import TextEditor from 'components/formik/TextEditor'
+import DetailsField from 'components/formik/DetailsField'
+
 import connector from './connector'
 import formik from './formik'
 
@@ -47,17 +49,9 @@ const CreatePlaceForm = ({ classes, place, isSubmitting }) =>
     />
 
     <Field
-      component={TextField}
-      name="working_day"
-      label="Рабочие дни"
-      placeholder="Понедельник - Пятница"
-    />
-
-    <Field
-      component={TextField}
-      name="working_hours"
-      label="Часы работы"
-      placeholder="8:00 - 23:00"
+      component={DetailsField}
+      name="details"
+      label="Детали"
     />
 
     <Field
