@@ -52,6 +52,10 @@ const styles = theme => ({
   description: {
     lineHeight: '1.7',
   },
+  badge: {
+    minWidth: 100,
+    marginBottom: 30,
+  },
 })
 
 const PlacePanel = ({ classes, place }) =>
@@ -77,7 +81,7 @@ const PlacePanel = ({ classes, place }) =>
 
       <div className={classes.whenPriceContainer}>
         {place.details.map((detail, index) =>
-          <div key={index}>
+          <div key={index} className={classes.badge}>
             <Typography>{detail.label}</Typography>
             <Typography variant="caption">{detail.value}</Typography>
           </div>)}
