@@ -1,15 +1,15 @@
 /* eslint-disable dot-notation,class-methods-use-this */
+import { BACKEND_URL } from 'services/constants'
+import { logout } from 'src/redux/auth/action'
 import axios from 'axios'
 import to from 'util-to'
 import store from '../store'
-import { BACKEND_URL } from 'services/constants'
-import { logout } from 'src/redux/auth/action'
 
 class Http {
   constructor() {
     this.instance = axios.create({
       baseURL: BACKEND_URL,
-      timeout: 10000,
+      timeout: 100000,
     })
   }
 
