@@ -5933,10 +5933,10 @@ md5@^2.0.0:
     crypt "~0.0.1"
     is-buffer "~1.1.1"
 
-mdi-react@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/mdi-react/-/mdi-react-4.0.0.tgz#dc0f06e6c9ae69c5ce468f8ae51a8bd76e3409db"
-  integrity sha1-3A8G5smuacXORo+K5RqL1240Cds=
+mdi-react@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/mdi-react/-/mdi-react-5.0.0.tgz#38d5e0ac15e9322c7e0ff1e1dc5e1d65748e06db"
+  integrity sha512-26rbkxWW7yHBJrdZm9J06R3/4SzkqEVyYi/e0vjuWgpv4G7s64XDRjizKry98pnkjtAkktc0/roq6oUo9KbTYQ==
 
 media-typer@0.3.0:
   version "0.3.0"
