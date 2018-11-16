@@ -36,9 +36,13 @@ class DetailsField extends Component {
 
   add = () => {
     const { name, value, onChange } = this.props
+
+    if (value.find(d => d.label === this.label.value)) return
+
     const result = [...value, { label: this.label.value, value: this.value.value }]
     this.label.value = ''
     this.value.value = ''
+
 
     onChange(name, result)
   }
@@ -46,11 +50,13 @@ class DetailsField extends Component {
   change = detail => (e) => {
     const { name, value, onChange } = this.props
 
+
     const valueIndex = value.findIndex(d => d.label === detail.label)
 
     switch (e.target.name) {
 
       case 'label':
+        if (value.find(d => d.label === e.target.value)) return
         value[valueIndex] = { label: e.target.value, value: detail.value }
         break
       case 'value':
