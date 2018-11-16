@@ -7,11 +7,27 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import { func, object, bool, string, oneOfType } from 'prop-types'
 import { FormControl, FormHelperText, FormLabel, withStyles } from '@material-ui/core'
 
-const styles = {
+const styles = theme => ({
+  root: {
+    display: 'inline-block',
+    borderRadius: '8%',
+  },
+  border: {
+    overflow: 'hidden',
+    background: theme.palette.secondary.light,
+    padding: 3,
+    borderRadius: 8,
+  },
+  input: {
+    paddingTop: 10,
+    display: 'block',
+    background: 'white',
+    borderRadius: 8,
+  },
   label: {
     paddingBottom: 16,
   },
-}
+})
 
 class TextEditor extends Component {
 
@@ -38,16 +54,20 @@ class TextEditor extends Component {
     const { editorState } = this.state
 
     return (
-      <FormControl>
+      <FormControl className={classes.root}>
         <FormLabel className={classes.label} component="legend">{label}</FormLabel>
-        <Editor
-          editorState={editorState}
-          toolbarClassName="toolbarClassName"
-          wrapperClassName="wrapperClassName"
-          editorClassName="editorClassName"
-          onEditorStateChange={this.onEditorStateChange}
-        />
-        <FormHelperText error={error}>{helperText}</FormHelperText>
+        <div className={classes.border}>
+          <div className={classes.input}>
+            <Editor
+              editorState={editorState}
+              toolbarClassName="toolbarClassName"
+              wrapperClassName="wrapperClassName"
+              editorClassName="editorClassName"
+              onEditorStateChange={this.onEditorStateChange}
+            />
+          </div>
+          {helperText && <FormHelperText error={error}>{helperText}</FormHelperText>}
+        </div>
       </FormControl>
     )
   }
