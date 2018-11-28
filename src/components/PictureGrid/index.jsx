@@ -70,7 +70,7 @@ class PictureGrid extends Component {
     const { classes } = this.props
 
     const videos = document.querySelectorAll('.grid-video')
-    videos.forEach(async (video) => {
+    videos.forEach((video) => {
       if (videos.length === 1) {
         video.classList.add(classes.oneVideo)
       }
@@ -89,6 +89,7 @@ class PictureGrid extends Component {
       }
     })
   }
+
 
   primisifyPicture = picture =>
     new Promise((resolve) => {
@@ -110,18 +111,19 @@ class PictureGrid extends Component {
             <Avatar
               alt="grid"
               key={picture}
-              onClick={this.handleClick(picture)}
               src={picture}
+              onClick={this.handleClick(picture)}
               className={`${classes.gridPicture} grid-picture`}
             />,
           )}
           {!isEmpty(videos) && videos.map((video, index) =>
             <iframe
               key={index}
-              src={`https://www.youtube.com/embed/${video}`}
-              frameBorder="0"
               title="video"
+              frameBorder="0"
               allowFullScreen
+              src={`https://www.youtube.com/embed/${video}`}
+              className={`${classes.gridPicture} grid-video`}
             />,
           )}
         </div>
