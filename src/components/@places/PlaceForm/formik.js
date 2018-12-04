@@ -19,6 +19,7 @@ const formik = withFormik({
     pictures: place ? place.pictures : [],
     videos: place ? place.videos : [],
     details: place ? place.details : [],
+    labels: place ? place.labels : [],
     description: place ? place.description : '',
   }),
 
