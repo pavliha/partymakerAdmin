@@ -39,7 +39,7 @@ class LabelsField extends Component {
 
   add = () => {
     const { name, value, onChange } = this.props
-    const result = [...value, { labels: this.labels.value }]
+    const result = [...value, this.labels.value]
     this.labels.value = ''
 
     onChange(name, result)
@@ -51,8 +51,10 @@ class LabelsField extends Component {
 
     const search = e.target.value.toLowerCase()
     let resultSearch = labels.filter((label) => {
-      const allInfo = `${Object.values(label).join('')}`
-      return allInfo.toLowerCase().includes(search)
+      const allInfo = `${Object.values(label)
+        .join('')}`
+      return allInfo.toLowerCase()
+        .includes(search)
     })
 
     if (e.target.value === '') resultSearch = labels
@@ -66,7 +68,15 @@ class LabelsField extends Component {
 
   remove = detail => () => {
     const { name, value, onChange } = this.props
-    const result = value.filter(d => d.labels !== detail.labels)
+    const result = value.filter(d => d !== detail)
+
+    onChange(name, result)
+  }
+
+  handleClickChip = (label) => {
+    const { name, value, onChange } = this.props
+    const result = [...value, label]
+    this.labels.value = ''
 
     onChange(name, result)
   }
@@ -84,7 +94,7 @@ class LabelsField extends Component {
             <TextField
               fullWidth
               name="labels"
-              value={detail.labels}
+              value={detail}
               placeholder={placeholder}
               className={classes.fieldValue}
               onChange={event => this.change(event)}
@@ -102,11 +112,13 @@ class LabelsField extends Component {
         <FormHelperText error={error}>{helperText}</FormHelperText>
         <div className={classes.flex}>
           {filterLabel.map(lab =>
-            <Chip
-              key={lab}
-              label={lab}
-              className={classes.chip}
-            />)}
+            value.findIndex(d => d === lab) < 0 &&
+              <Chip
+                key={lab}
+                label={lab}
+                onClick={() => this.handleClickChip(lab)}
+                className={classes.chip}
+              />)}
         </div>
       </FormControl>
     )
