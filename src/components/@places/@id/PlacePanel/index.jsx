@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import React from 'react'
-import { array, object, shape, string } from 'prop-types'
+import { object, shape, string } from 'prop-types'
 import { Chip, IconButton, Typography, withStyles } from '@material-ui/core'
 import LocationIcon from 'mdi-react/LocationIcon'
 import CreateIcon from 'mdi-react/CreateIcon'
@@ -58,7 +58,7 @@ const styles = theme => ({
   chip: {},
 })
 
-const PlacePanel = ({ classes, place, labels }) =>
+const PlacePanel = ({ classes, place }) =>
   <section className={classes.root}>
     <div className={classes.content}>
       <Typography color="inherit" variant="title" className={classes.title}>
@@ -88,7 +88,7 @@ const PlacePanel = ({ classes, place, labels }) =>
       </div>
 
       <div className={classes.whenPriceContainer}>
-        {labels.map((detail, index) =>
+        {place.labels.map((detail, index) =>
           <Chip
             key={index}
             label={detail}
@@ -106,7 +106,6 @@ const PlacePanel = ({ classes, place, labels }) =>
 
 PlacePanel.propTypes = {
   classes: object.isRequired,
-  labels: array.isRequired,
   place: shape({
     admin: object.isRequired,
     title: string.isRequired,

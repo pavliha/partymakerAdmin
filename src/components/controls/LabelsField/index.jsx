@@ -3,13 +3,10 @@ import { array, bool, func, object, oneOfType, string } from 'prop-types'
 import { Chip, FormControl, FormHelperText, FormLabel, IconButton, TextField, withStyles } from '@material-ui/core'
 import PlusIcon from 'mdi-react/PlusIcon'
 import DeleteIcon from 'mdi-react/DeleteIcon'
+import Loading from 'components/Loading'
+import connector from './connector'
 
 const styles = {
-  root: {},
-  label: {},
-  field: {},
-  fieldLabel: {},
-  fieldValue: {},
   labelTd: {
     width: '100%',
     height: '100%',
@@ -32,10 +29,11 @@ const styles = {
 }
 
 class LabelsField extends Component {
-  state = {
-    labels: ['Природа', 'Активный отдых', 'Спорт', 'Бухичь'],
-    filterLabel: ['Природа', 'Активный отдых', 'Спорт', 'Бухичь'],
+  componentDidMount() {
+    const { actions } = this.props
+    actions.labels.load()
   }
+
 
   add = () => {
     const { name, value, onChange } = this.props
@@ -46,24 +44,10 @@ class LabelsField extends Component {
   }
 
   change = (e) => {
-    const { name, onChange } = this.props
-    const { labels } = this.state
+    const { actions, name, onChange } = this.props
+    actions.labels.search(e.target.value)
 
-    const search = e.target.value.toLowerCase()
-    let resultSearch = labels.filter((label) => {
-      const allInfo = `${Object.values(label)
-        .join('')}`
-      return allInfo.toLowerCase()
-        .includes(search)
-    })
-
-    if (e.target.value === '') resultSearch = labels
-
-    this.setState({
-      filterLabel: resultSearch,
-    })
-
-    onChange(name, e.target.value)
+    // onChange(name, e.target.value) TODO: fix this bug)))
   }
 
   remove = detail => () => {
@@ -82,21 +66,28 @@ class LabelsField extends Component {
   }
 
   render() {
-    const { classes, label, placeholder, value, error, helperText } = this.props
-    const { filterLabel } = this.state
+    const {
+      classes,
+      label,
+      value,
+      error,
+      helperText,
+      placeholder,
+      labels: { loading, filterLabel },
+    } = this.props
+    if (loading) return <Loading />
 
     return (
       <FormControl fullWidth className={classes.root}>
         <FormLabel className={classes.label} component="legend">{label}</FormLabel>
 
-        {value.map((detail, index) => (
+        {value && value.map((detail, index) => (
           <div className={classes.labelTd} key={index}>
             <TextField
               fullWidth
               name="labels"
               value={detail}
               placeholder={placeholder}
-              className={classes.fieldValue}
               onChange={event => this.change(event)}
             />
             <IconButton onClick={this.remove(detail)}><DeleteIcon /></IconButton>
@@ -104,29 +95,38 @@ class LabelsField extends Component {
 
         <div className="flex">
           <div className={classes.valueTd}>
-            <TextField fullWidth placeholder={placeholder} inputRef={(v) => { this.labels = v }} />
+            <TextField
+              fullWidth
+              placeholder={placeholder}
+              inputRef={(v) => { this.labels = v }}
+              onChange={event => this.change(event)}
+            />
           </div>
           <IconButton onClick={this.add}><PlusIcon /></IconButton>
         </div>
 
         <FormHelperText error={error}>{helperText}</FormHelperText>
+
         <div className={classes.flex}>
-          {filterLabel.map(lab =>
+          {filterLabel && filterLabel.map((lab, index) =>
             value.findIndex(d => d === lab) < 0 &&
-              <Chip
-                key={lab}
-                label={lab}
-                onClick={() => this.handleClickChip(lab)}
-                className={classes.chip}
-              />)}
+            <Chip
+              key={index}
+              label={lab}
+              className={classes.chip}
+              onClick={() => this.handleClickChip(lab)}
+            />)}
         </div>
+
       </FormControl>
     )
   }
 }
 
 LabelsField.propTypes = {
+  actions: object.isRequired,
   classes: object.isRequired,
+  labels: object.isRequired,
   name: string.isRequired,
   onChange: func.isRequired,
   value: array.isRequired,
@@ -143,4 +143,4 @@ LabelsField.defaultProps = {
   helperText: null,
 }
 
-export default withStyles(styles)(LabelsField)
+export default withStyles(styles)(connector(LabelsField))

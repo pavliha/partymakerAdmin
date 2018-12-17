@@ -65,9 +65,7 @@ class PlacesScene extends React.Component {
 
     return (
       <div className={classes.root}>
-        <PlacesTable
-          onDelete={this.deletePlace}
-        />
+        <PlacesTable onDelete={this.deletePlace} />
         <DeleteDialog
           isOpen={this.state.isOpenDialog}
           onClose={this.handleClose}

@@ -40,8 +40,9 @@ const formik = withFormik({
         placeId: values.address.place_id || values.address.placeId,
       } : place.address,
       details: values.details,
-      pictures: values.pictures || [],
-      videos: values.videos || [],
+      labels: values.labels,
+      pictures: values.pictures,
+      videos: values.videos,
       description: values.description,
     }
 
