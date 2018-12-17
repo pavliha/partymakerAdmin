@@ -23,10 +23,8 @@ class Place {
     return Http.delete(`/places/${id}`)
   }
 
-  async all(params) {
-    const response = await Http.get(`/places?${qs.stringify({ limit: 10000, ...params })}`)
-    response.data = response.data.map(place => formatPlace(place))
-    return response
+  all(params) {
+    return Http.get(`/places?${qs.stringify({ limit: 10000, ...params })}`)
   }
 }
 
