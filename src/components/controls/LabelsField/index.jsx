@@ -38,16 +38,29 @@ class LabelsField extends Component {
   add = () => {
     const { name, value, onChange } = this.props
     const result = [...value, this.labels.value]
+    this.filter('')
     this.labels.value = ''
 
     onChange(name, result)
   }
 
-  change = (e) => {
-    const { actions, name, onChange } = this.props
-    actions.labels.search(e.target.value)
+  filter = (value) => {
+    const { actions } = this.props
+    actions.labels.search(value)
+  }
 
-    // onChange(name, e.target.value) TODO: fix this bug)))
+  changeFilter = (e) => {
+    this.filter(e.target.value)
+  }
+
+  change = detail => (e) => {
+    const { name, value, onChange } = this.props
+    this.filter(e.target.value)
+
+    const valueIndex = value.findIndex(d => d === detail)
+    value[valueIndex] = e.target.value
+
+    onChange(name, [...value])
   }
 
   remove = detail => () => {
@@ -60,6 +73,8 @@ class LabelsField extends Component {
   handleClickChip = (label) => {
     const { name, value, onChange } = this.props
     const result = [...value, label]
+
+    this.filter('')
     this.labels.value = ''
 
     onChange(name, result)
@@ -88,7 +103,7 @@ class LabelsField extends Component {
               name="labels"
               value={detail}
               placeholder={placeholder}
-              onChange={event => this.change(event)}
+              onChange={this.change(detail)}
             />
             <IconButton onClick={this.remove(detail)}><DeleteIcon /></IconButton>
           </div>))}
@@ -99,7 +114,7 @@ class LabelsField extends Component {
               fullWidth
               placeholder={placeholder}
               inputRef={(v) => { this.labels = v }}
-              onChange={event => this.change(event)}
+              onChange={event => this.changeFilter(event)}
             />
           </div>
           <IconButton onClick={this.add}><PlusIcon /></IconButton>
