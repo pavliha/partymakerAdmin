@@ -1,11 +1,7 @@
-import {
-  SET_HEADER_ICON,
-  SET_HEADER_TITLE,
-  RESET_HEADER_TITLE,
-} from './action'
+import { RESET_HEADER_TITLE, SET_HEADER_ICON, SET_HEADER_TITLE } from './action'
 
 const initialState = {
-  title: 'Partymaker',
+  title: 'Computools',
   link: '/',
   icon: 'menu',
   url: null,

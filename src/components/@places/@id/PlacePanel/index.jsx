@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import React from 'react'
 import { object, shape, string } from 'prop-types'
-import { IconButton, Typography, withStyles } from '@material-ui/core'
+import { Chip, IconButton, Typography, withStyles } from '@material-ui/core'
 import LocationIcon from 'mdi-react/LocationIcon'
 import CreateIcon from 'mdi-react/CreateIcon'
 import { Link } from 'react-router-dom'
@@ -47,11 +47,15 @@ const styles = theme => ({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
-    marginBottom: 30,
   },
   description: {
     lineHeight: '1.7',
   },
+  badge: {
+    minWidth: 100,
+    marginBottom: 30,
+  },
+  chip: {},
 })
 
 const PlacePanel = ({ classes, place }) =>
@@ -77,10 +81,19 @@ const PlacePanel = ({ classes, place }) =>
 
       <div className={classes.whenPriceContainer}>
         {place.details.map((detail, index) =>
-          <div key={index}>
+          <div key={index} className={classes.badge}>
             <Typography>{detail.label}</Typography>
             <Typography variant="caption">{detail.value}</Typography>
           </div>)}
+      </div>
+
+      <div className={classes.whenPriceContainer}>
+        {place.labels.map((detail, index) =>
+          <Chip
+            key={index}
+            label={detail}
+            className={classes.chip}
+          />)}
       </div>
       <Typography
         color="inherit"
