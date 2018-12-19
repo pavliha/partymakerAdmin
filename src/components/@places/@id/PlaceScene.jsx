@@ -2,8 +2,6 @@
 import React from 'react'
 import { object } from 'prop-types'
 import { withStyles } from '@material-ui/core'
-
-import Loading from 'components/Loading'
 import NotFound from 'components/NotFound'
 import PictureGrid from 'components/PictureGrid'
 import isEmpty from 'lodash/isEmpty'
@@ -65,13 +63,14 @@ class PlaceScene extends React.Component {
   render() {
     const { classes, places: { places, current } } = this.props
     const place = places[current]
+    const labels = ['Природа', 'Активный отдых', 'Спорт', 'Бухичь']
 
     if (isEmpty(place)) return <NotFound />
 
     return (
       <div className={classes.root}>
         <div className={classes.place}>
-          <PlacePanel place={place} />
+          <PlacePanel place={place} labels={labels} />
         </div>
         <div className={classes.grid}>
           <PictureGrid

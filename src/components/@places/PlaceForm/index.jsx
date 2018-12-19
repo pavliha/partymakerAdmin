@@ -10,6 +10,7 @@ import PictureUpload from 'components/formik/PictureUpload'
 import YoutubeUpload from 'components/formik/YoutubeUpload'
 import TextEditor from 'components/formik/TextEditor'
 import DetailsField from 'components/formik/DetailsField'
+import LabelsField from 'components/formik/LabelsField'
 
 import connector from './connector'
 import formik from './formik'
@@ -52,6 +53,14 @@ const CreatePlaceForm = ({ classes, place, isSubmitting }) =>
       component={DetailsField}
       name="details"
       label="Детали"
+    />
+
+
+    <Field
+      component={LabelsField}
+      name="labels"
+      label="Категории"
+      placeholder="Природа"
     />
 
     <Field

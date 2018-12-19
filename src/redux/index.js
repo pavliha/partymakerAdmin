@@ -5,6 +5,7 @@ import authReducer from './auth/reducer'
 import layoutReducer from './layout/reducer'
 import headerReducer from './header/reducer'
 import placesReducer from './places/reducer'
+import labelsReducer from './labels/reducer'
 import table from './table'
 import modalReducer from './modal/reducer'
 
@@ -18,6 +19,7 @@ const reducers = combineReducers({
   authReducer,
   modalReducer,
   placesReducer,
+  labelsReducer,
   table,
   layoutReducer,
   headerReducer,
