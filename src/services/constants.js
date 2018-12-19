@@ -10,3 +10,4 @@ if (process.env.NODE_ENV === 'development') {
 
 export const BACKEND_URL = urls.backend
 export const HOST_URL = urls.frontend
+
