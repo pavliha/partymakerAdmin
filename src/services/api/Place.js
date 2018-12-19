@@ -1,32 +1,26 @@
 /* eslint-disable class-methods-use-this,no-return-await */
 import Http from 'services/Http'
 import qs from 'querystring'
-import formatPlace from 'formatters/place'
 
 class Place {
-  async find(id) {
-    const response = await Http.get(`/places/${id}`)
-    return formatPlace(response.place)
+  find(id) {
+    return Http.get(`/places/${id}`)
   }
 
-  async create(form) {
-    const response = await Http.post('/places', form)
-    return formatPlace(response.place)
+  create(form) {
+    return Http.post('/places', form)
   }
 
-  async update(id, form) {
-    const response = await Http.put(`/places/${id}`, form)
-    return formatPlace(response.place)
+  update(id, form) {
+    return Http.put(`/places/${id}`, form)
   }
 
   delete(id) {
     return Http.delete(`/places/${id}`)
   }
 
-  async all(params) {
-    const response = await Http.get(`/places?${qs.stringify({ limit: 10000, ...params })}`)
-    response.data = response.data.map(place => formatPlace(place))
-    return response
+  all(params) {
+    return Http.get(`/places?${qs.stringify({ limit: 10000, ...params })}`)
   }
 }
 
